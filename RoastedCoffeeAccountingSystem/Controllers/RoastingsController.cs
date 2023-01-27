@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using RoastedCoffeeAccountingSystem.Models;
 
@@ -24,7 +19,7 @@ namespace RoastedCoffeeAccountingSystem.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Roasting>>> GetRoastings()
         {
-            return await _context.Roastings.ToListAsync();
+            return await _context.Roastings.Include(r => r.Coffee).ToListAsync();
         }
 
         // GET: api/Roastings/5
@@ -75,8 +70,9 @@ namespace RoastedCoffeeAccountingSystem.Controllers
         // POST: api/Roastings
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Roasting>> PostRoasting(Roasting roasting)
+        public async Task<ActionResult<Roasting>> PostRoasting(RoastingDTO roastingDTO)
         {
+            var roasting = DTOToRoasting(roastingDTO);
             _context.Roastings.Add(roasting);
             await _context.SaveChangesAsync();
 
@@ -98,6 +94,15 @@ namespace RoastedCoffeeAccountingSystem.Controllers
 
             return NoContent();
         }
+
+        private Roasting DTOToRoasting(RoastingDTO roastingDTO)
+            => new Roasting
+            {
+                Amount = roastingDTO.Amount,
+                CoffeeId = roastingDTO.CoffeeId,
+                Coffee = _context.GreenCoffee.SingleOrDefault(c => c.Id == roastingDTO.CoffeeId)!
+            };
+
 
         private bool RoastingExists(int id)
         {

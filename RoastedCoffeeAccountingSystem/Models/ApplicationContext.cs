@@ -12,7 +12,7 @@ namespace RoastedCoffeeAccountingSystem.Models
         public ApplicationContext(DbContextOptions<ApplicationContext> options)
             : base(options)
         { 
-            Database.EnsureCreated();
+            //Database.EnsureCreated();
         }
 
         public override int SaveChanges()
@@ -31,7 +31,7 @@ namespace RoastedCoffeeAccountingSystem.Models
         {
             var brazilSantos = new GreenCoffee { Id = 1, Variety = "Arabica", Country = "Brazil", Region = "Santos", Weight = 59.5 };
             var columbiaExcelso = new GreenCoffee { Id = 2, Variety = "Arabica", Country = "Columbia", Region = "Excelso", Weight = 70 };
-            var Uganda = new GreenCoffee { Id = 3, Variety = "Robusta", Country = "Uganda", Weight = 20 };
+            var Uganda = new GreenCoffee { Id = 3, Variety = "Robusta", Country = "Uganda", Region="Uganda", Weight = 20 };
 
             var firstRoasting = new Roasting { Id = 1, Amount = 8.12, CoffeeId = 1, Date = DateTime.Now};
             var secondRoasting = new Roasting { Id = 2, Amount = 4.02, CoffeeId = 2, Date = DateTime.Now };

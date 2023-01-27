@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using RoastedCoffeeAccountingSystem.Models;
 
@@ -25,6 +20,15 @@ namespace RoastedCoffeeAccountingSystem.Controllers
         public async Task<ActionResult<IEnumerable<GreenCoffee>>> GetGreenCoffee()
         {
             return await _context.GreenCoffee.ToListAsync();
+        }
+
+        [HttpGet("d")]
+        public async Task<ActionResult<IEnumerable<GreenCoffee>>> GetDistinctGreenCoffee()
+        {
+            return await _context.GreenCoffee
+                .GroupBy(c => c.Region)
+                .Select(g => g.FirstOrDefault()!)
+                .ToListAsync();
         }
 
         // GET: api/GreenCoffee/5
