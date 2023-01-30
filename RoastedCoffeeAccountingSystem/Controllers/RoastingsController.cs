@@ -39,14 +39,18 @@ namespace RoastedCoffeeAccountingSystem.Controllers
         // PUT: api/Roastings/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutRoasting(int id, Roasting roasting)
+        public async Task<IActionResult> PutRoasting(int id, RoastingDTO roastingDTO)
         {
+            var roasting = DTOToRoasting(roastingDTO);
+
             if (id != roasting.Id)
             {
                 return BadRequest();
             }
 
             _context.Entry(roasting).State = EntityState.Modified;
+            _context.Entry(roasting).Property(r => r.Date).IsModified = false;
+            
 
             try
             {
@@ -63,8 +67,11 @@ namespace RoastedCoffeeAccountingSystem.Controllers
                     throw;
                 }
             }
+            roasting.Date = (await _context.Roastings
+                .AsNoTracking()
+                .SingleOrDefaultAsync(r => r.Id == id))!.Date;
 
-            return NoContent();
+            return Ok(roasting);
         }
 
         // POST: api/Roastings
@@ -96,8 +103,9 @@ namespace RoastedCoffeeAccountingSystem.Controllers
         }
 
         private Roasting DTOToRoasting(RoastingDTO roastingDTO)
-            => new Roasting
+            => new()
             {
+                Id = roastingDTO.Id,
                 Amount = roastingDTO.Amount,
                 CoffeeId = roastingDTO.CoffeeId,
                 Coffee = _context.GreenCoffee.SingleOrDefault(c => c.Id == roastingDTO.CoffeeId)!

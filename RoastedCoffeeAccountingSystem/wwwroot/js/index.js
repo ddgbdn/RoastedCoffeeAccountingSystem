@@ -168,6 +168,20 @@ async function getRoastings() {
     }
 }
 
+async function getRoasting(id) {
+    const response = await fetch(`/api/Roastings/${id}`, {
+        method: "GET",
+        headers: { "Accept": "application/json" }
+    });
+
+    if (response.ok) {
+        const roasting = await response.json();
+        document.querySelector("#roastings-form input[name='id']").value = roasting.id;
+        document.getElementById("coffeeid").value = roasting.coffeeId;
+        document.getElementById("amount").value = roasting.amount;
+    }
+}
+
 async function createRoasting(roasting) {
     const response = await fetch("/api/Roastings", {
         method: "POST",
@@ -175,10 +189,43 @@ async function createRoasting(roasting) {
         body: JSON.stringify(roasting)
     });
 
-    if (response.ok)
-        getRoastings();
+    if (response.ok) {
+        const roasting = await response.json();
+        const table = document.querySelector("#roastingsTable");
+        table.append(rowR(roasting));
+    }
     else
         console.log(await response.json());
+
+    resetRoastingsForm();
+}
+
+async function updateRoasting(roasting) {
+    const response = await fetch(`/api/Roastings/${roasting.id}`, {
+        method: "PUT",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify(roasting)
+    });
+
+    if (response.ok) {
+        const roasting = await response.json();
+        document.querySelector(`#roastingsTable tr[data-rowid='${roasting.id}']`).replaceWith(rowR(roasting));
+    }
+
+    resetRoastingsForm();
+}
+
+async function deleteRoasting(id) {
+    const response = await fetch(`/api/Roastings/${id}`, {
+        method: "DELETE",
+    });
+
+    if (response.ok)
+        document.querySelector(`#roastingsTable tr[data-rowid='${id}']`).remove();
+    else {
+        const error = await response.json();
+        console.log(error);
+    }
 }
 
 function rowR(roasting) {
@@ -194,24 +241,31 @@ function rowR(roasting) {
     tr.append(amountTd);
 
     const dateTd = document.createElement("td");
-    const date = new Date(roasting.date)
+    dateTd.setAttribute("id", "date");
+    const date = new Date(roasting.date);
     dateTd.append(date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear());
     tr.append(dateTd);
 
     const buttonsTd = document.createElement("td");
     const editBtn = document.createElement("button");
     editBtn.append("Modify");
-    //editBtn.addEventListener("click", () => getCoffeeById(coffee.id));
+    editBtn.addEventListener("click", () => getRoasting(roasting.id));
     buttonsTd.append(editBtn);
     tr.append(buttonsTd);
 
     const deleteBtn = document.createElement("button");
     deleteBtn.append("Delete");
-    //deleteBtn.addEventListener("click", () => deleteCoffee(coffee.id));
+    deleteBtn.addEventListener("click", () => deleteRoasting(roasting.id));
     buttonsTd.append(deleteBtn);
     tr.append(buttonsTd);
 
     return tr;
+}
+
+function resetRoastingsForm() {
+    document.querySelector("#roastings-form input[name='id']").value =
+    document.getElementById("coffeeid").value =
+    document.getElementById("amount").value = "";
 }
 
 function coffeeOption(coffee) {
@@ -233,14 +287,15 @@ function coffeeOption(coffee) {
             roasting[k] = parseFloat(v, 10);
         });
 
-        if (roasting.id === "") {
+        if (isNaN(roasting.id)) {
             delete roasting.id
             createRoasting(roasting);
         }
         else {
-            createRoasting(roasting);
+            updateRoasting(roasting);
         }
-    })
+    });
+    resetRoastingsForm();
 })();
 
 async function getOptions() {
@@ -251,7 +306,8 @@ async function getOptions() {
 
     if (response.ok) {
         const coffees = await response.json();
-        const select = document.querySelector("#roastings-form select[name='coffeeid']")
+        const select = document.querySelector("#roastings-form select[name='coffeeid']");
+        removeAll(select);
         coffees.forEach(c => select.append(coffeeOption(c)));
     }
     else {
@@ -259,6 +315,12 @@ async function getOptions() {
         console.log(error);
     }
 };
+
+function removeAll(selectBox) {
+    while (selectBox.options.length > 0) {
+        selectBox.remove(0);
+    }
+}
 
 getRoastings();
 
