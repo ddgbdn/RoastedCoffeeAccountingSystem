@@ -1,73 +1,84 @@
 ﻿<!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <meta charset="utf-8" />
-    <title>
-    </title>
-    <link rel="stylesheet" type="text/css" href="css/style.css" />
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title></title>
+    <link rel="stylesheet" href="lib/bootstrap/css/bootstrap.min.css" />
 </head>
 <body>
-    <div class="dashboardContainer"></div>
-    <div class="greenCoffee-container">
-        <div class="row">
-            <div class="column table">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Variety</th>
-                            <th>Country</th>
-                            <th>Region</th>
-                            <th>Weight</th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody id="coffeeTable">
-                    </tbody>
-                </table>
-            </div>
-            <div class="column form">
-                <form id="greenCoffee-form">
-                    <input type="hidden" id="cid" name="id" />
-                    <label for="variety">Variety</label>
-                    <input name="variety" />
-                    <label for="country">Country</label>
-                    <input name="country" />
-                    <label for="region">Region</label>
-                    <input name="region" />
-                    <label for="weight">Weight</label>
-                    <input name="weight" />
-                    <button type="submit" class="saveBtn">Save</button>
-                </form>
-            </div>
-        </div>
-    </div>
-    <div class="roastings-container">
-        <div class="row">
-            <div class="column table">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Coffee</th>
-                            <th>Amount</th>
-                            <th>Date</th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody id="roastingsTable"></tbody>
-                </table>
-            </div>
-            <div class="column form">
-                <form id="roastings-form">  
-                    <input type="hidden" id="id" name="id"/>
-                    <label for="coffeeid">Coffee</label>
-                    <select name="coffeeid" id="coffeeid"></select>
-                    <label for="amount">Amount</label>
-                    <input name="amount" id="amount"/>
-                    <button type="submit" class="saveBtn">Save</button>
-                </form>
-            </div>
-        </div>
-    </div>
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col">
+				<div class="row">
+					<div class="col-9">
+						<table class="table table-bordered table-dark table-sm">
+							<thead>
+								<tr>
+									<th>Variety</th>
+									<th>Country</th>
+									<th>Region</th>
+									<th>Weight</th>
+									<th></th>
+								</tr>
+							</thead>
+							<tbody id="coffeeTable" class="table-group-divider">
+							</tbody>
+						</table>
+					</div>
+					<div class="col-3">
+						<form id="greenCoffee-form">
+							<input type="hidden" id="cid" name="id" />
+							<div class="mb-2">
+								<label for="variety" class="form-label">Variety</label>
+								<input name="variety" class="form-control form-control-sm"/>
+							</div>
+							<div class="mb-2">
+								<label for="country" class="form-label">Country</label>
+								<input name="country" class="form-control form-control-sm"/>
+							</div>
+							<div class="mb-2">
+								<label for="region" class="form-label">Region</label>
+								<input name="region" class="form-control form-control-sm"/>
+							</div>
+							<div class="mb-2">
+								<label for="weight" class="form-label">Weight</label>
+								<input name="weight" class="form-control form-control-sm"/>
+							</div>
+							<button type="submit" class="btn btn-success">Save</button>
+						</form>
+					</div>
+				</div>
+			</div>
+			<div class="col">
+				<div class="row">
+					<div class="col">
+						<table>
+							<thead>
+								<tr>
+									<th>Coffee</th>
+									<th>Amount</th>
+									<th>Date</th>
+									<th></th>
+								</tr>
+							</thead>
+							<tbody id="roastingsTable"></tbody>
+						</table>
+					</div>
+					<div class="col">
+						<form id="roastings-form">
+							<input type="hidden" id="id" name="id" />
+							<label for="coffeeid">Coffee</label>
+							<select name="coffeeid" id="coffeeid"></select>
+							<label for="amount">Amount</label>
+							<input name="amount" id="amount" />
+							<button type="submit" class="saveBtn">Save</button>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
     <script src="js/index.js"></script>
 </body>
 </html>
