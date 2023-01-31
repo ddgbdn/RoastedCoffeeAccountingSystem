@@ -9,10 +9,9 @@
         const rows = document.getElementById("coffeeTable");
         coffee.forEach(c => rows.append(rowC(c)));
     }
-    else {
-        const error = await response.json();
-        console.log(error);
-    }
+    else 
+        console.log(await response.json());
+    
 };
 
 async function getCoffeeById(id) {
@@ -21,16 +20,12 @@ async function getCoffeeById(id) {
         headers: { "Accept": "application/json" }
     });
 
-    if (response.ok) {
-        const coffee = await response.json();
-        Object.keys(coffee).forEach(key => {
-            document.querySelector(`#greenCoffee-form input[name='${key}']`).value = coffee[key];
-        });
-    }
-    else {
-        const error = await response.json();
-        console.log(error);
-    }
+    if (response.ok)
+        Object.keys(await response.json()).forEach(key =>
+            document.querySelector(`#greenCoffee-form input[name='${key}']`).value = coffee[key]
+        );    
+    else
+        console.log(await response.json());
 }
 
 async function createCoffee(coffee) {
@@ -40,14 +35,10 @@ async function createCoffee(coffee) {
         body: JSON.stringify(coffee)
     });
 
-    if (response.ok) {
-        const coffee = await response.json();
-        document.getElementById("coffeeTable").append(rowC(coffee));
-    }
-    else {
-        const error = await response.json();
-        console.log(error);
-    }
+    if (response.ok)
+        document.getElementById("coffeeTable").append(rowC(await response.json()));    
+    else
+        console.log(await response.json());
 
     getOptions();
     resetCoffeeForm();
@@ -63,10 +54,8 @@ async function updateCoffee(coffee) {
     if (response.ok) {
         document.querySelector(`#coffeeTable tr[data-rowid='${coffee.id}']`).replaceWith(rowC(coffee));
     }
-    else {
-        const error = response.json();
-        console.log(error);
-    }
+    else
+        console.log(await response.json());
 
     getOptions();
     resetCoffeeForm();
@@ -80,10 +69,10 @@ async function deleteCoffee(id) {
 
     if (response.ok) 
         document.querySelector(`#coffeeTable tr[data-rowid='${id}']`).remove();    
-    else {
-        const error = response.json();
-        console.log(error);
-    }
+    else
+        console.log(await response.json());
+
+    getOptions();
 }
 
 function rowC(coffee) {
@@ -162,10 +151,8 @@ async function getRoastings() {
         const rows = document.getElementById("roastingsTable");
         roastings.forEach(r => rows.append(rowR(r)));
     }
-    else {
-        const error = await response.json();
-        console.log(error);
-    }
+    else
+        console.log(await response.json());
 }
 
 async function getRoasting(id) {
@@ -211,6 +198,8 @@ async function updateRoasting(roasting) {
         const roasting = await response.json();
         document.querySelector(`#roastingsTable tr[data-rowid='${roasting.id}']`).replaceWith(rowR(roasting));
     }
+    else
+        console.log(await response.json());
 
     resetRoastingsForm();
 }
@@ -222,10 +211,8 @@ async function deleteRoasting(id) {
 
     if (response.ok)
         document.querySelector(`#roastingsTable tr[data-rowid='${id}']`).remove();
-    else {
-        const error = await response.json();
-        console.log(error);
-    }
+    else
+        console.log(await response.json());
 }
 
 function rowR(roasting) {
@@ -233,7 +220,7 @@ function rowR(roasting) {
     tr.setAttribute("data-rowid", roasting.id);
 
     const coffeeTd = document.createElement("td");
-    coffeeTd.append(roasting.coffee.country + " | " + roasting.coffee.region);
+    coffeeTd.append(roasting.coffee.country + (roasting.coffee.region == "" ? "" : " | " + roasting.coffee.region));
     tr.append(coffeeTd);
 
     const amountTd = document.createElement("td");
@@ -310,16 +297,13 @@ async function getOptions() {
         removeAll(select);
         coffees.forEach(c => select.append(coffeeOption(c)));
     }
-    else {
-        const error = await response.json();
-        console.log(error);
-    }
+    else
+        console.log(await response.json());
 };
 
 function removeAll(selectBox) {
-    while (selectBox.options.length > 0) {
-        selectBox.remove(0);
-    }
+    while (selectBox.options.length > 0) 
+        selectBox.remove(0);    
 }
 
 getRoastings();
