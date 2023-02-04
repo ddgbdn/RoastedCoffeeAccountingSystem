@@ -22,13 +22,21 @@ namespace RoastedCoffeeAccountingSystem.Controllers
             return await _context.GreenCoffee.ToListAsync();
         }
 
+        //GET: api/GreenCoffee/d
         [HttpGet("d")]
         public async Task<ActionResult<IEnumerable<GreenCoffee>>> GetDistinctGreenCoffee()
         {
+            //Rewrite using SQL
             return await _context.GreenCoffee
+                .Where(c => c.Region != "")
                 .GroupBy(c => c.Region)
-                .Select(g => g.FirstOrDefault()!)
+                .Select(g=> g.FirstOrDefault()!)
+                .Union(_context.GreenCoffee
+                    .Where(c => c.Region == "")
+                    .GroupBy(c => c.Country)
+                    .Select(g => g.FirstOrDefault()!))
                 .ToListAsync();
+                
         }
 
         // GET: api/GreenCoffee/5

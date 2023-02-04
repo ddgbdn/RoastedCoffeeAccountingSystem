@@ -7,7 +7,7 @@
     if (response.ok) {
         const coffee = await response.json();
         const rows = document.getElementById("coffeeTable");
-        coffee.forEach(c => rows.append(rowC(c)));
+        coffee.forEach(c => rows.prepend(rowC(c)));
     }
     else 
         console.log(await response.json());
@@ -20,10 +20,12 @@ async function getCoffeeById(id) {
         headers: { "Accept": "application/json" }
     });
 
-    if (response.ok)
-        Object.keys(await response.json()).forEach(key =>
+    if (response.ok) {
+        const coffee = await response.json();
+        Object.keys(coffee).forEach(key =>
             document.querySelector(`#greenCoffee-form input[name='${key}']`).value = coffee[key]
-        );    
+        );
+    }
     else
         console.log(await response.json());
 }
@@ -36,7 +38,7 @@ async function createCoffee(coffee) {
     });
 
     if (response.ok)
-        document.getElementById("coffeeTable").append(rowC(await response.json()));    
+        document.getElementById("coffeeTable").prepend(rowC(await response.json()));    
     else
         console.log(await response.json());
 
@@ -94,17 +96,25 @@ function rowC(coffee) {
     const weightTd = document.createElement("td");
     weightTd.append(coffee.weight);
     tr.append(weightTd);
-
+    
     const buttonsTd = document.createElement("td");
+    buttonsTd.className = "d-block gap-2"
+
     const editBtn = document.createElement("button");
-    editBtn.append("Modify");
+    const eImg = document.createElement("img");
+    eImg.src = "../img/pencil-square.svg";
+    editBtn.append(eImg);
     editBtn.addEventListener("click", () => getCoffeeById(coffee.id));
+    editBtn.className = "btn btn-success btn-sm me-2";
     buttonsTd.append(editBtn);
     tr.append(buttonsTd);
 
     const deleteBtn = document.createElement("button");
-    deleteBtn.append("Delete");
+    const dImg = document.createElement("img");
+    dImg.src = "../img/trash.svg"
+    deleteBtn.append(dImg);
     deleteBtn.addEventListener("click", () => deleteCoffee(coffee.id));
+    deleteBtn.className = "btn btn-danger btn-sm me-2";
     buttonsTd.append(deleteBtn);
     tr.append(buttonsTd);
 
@@ -149,7 +159,7 @@ async function getRoastings() {
     if (response.ok) {
         const roastings = await response.json();
         const rows = document.getElementById("roastingsTable");
-        roastings.forEach(r => rows.append(rowR(r)));
+        roastings.forEach(r => rows.prepend(rowR(r)));
     }
     else
         console.log(await response.json());
@@ -179,7 +189,7 @@ async function createRoasting(roasting) {
     if (response.ok) {
         const roasting = await response.json();
         const table = document.querySelector("#roastingsTable");
-        table.append(rowR(roasting));
+        table.prepend(rowR(roasting));
     }
     else
         console.log(await response.json());
@@ -234,15 +244,23 @@ function rowR(roasting) {
     tr.append(dateTd);
 
     const buttonsTd = document.createElement("td");
+    buttonsTd.className = "d-block gap-2";
+
     const editBtn = document.createElement("button");
-    editBtn.append("Modify");
+    const eImg = document.createElement("img");
+    eImg.src = "../img/pencil-square.svg";
+    editBtn.append(eImg);
     editBtn.addEventListener("click", () => getRoasting(roasting.id));
+    editBtn.className = "btn btn-success btn-sm me-2";
     buttonsTd.append(editBtn);
     tr.append(buttonsTd);
 
     const deleteBtn = document.createElement("button");
-    deleteBtn.append("Delete");
+    const dImg = document.createElement("img");
+    dImg.src = "../img/trash.svg"
+    deleteBtn.append(dImg);
     deleteBtn.addEventListener("click", () => deleteRoasting(roasting.id));
+    deleteBtn.className = "btn btn-danger btn-sm me-2";
     buttonsTd.append(deleteBtn);
     tr.append(buttonsTd);
 
@@ -295,7 +313,7 @@ async function getOptions() {
         const coffees = await response.json();
         const select = document.querySelector("#roastings-form select[name='coffeeid']");
         removeAll(select);
-        coffees.forEach(c => select.append(coffeeOption(c)));
+        coffees.forEach(c => select.prepend(coffeeOption(c)));
     }
     else
         console.log(await response.json());
