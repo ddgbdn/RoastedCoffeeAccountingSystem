@@ -105,7 +105,7 @@ function rowC(coffee) {
     eImg.src = "../img/pencil-square.svg";
     editBtn.append(eImg);
     editBtn.addEventListener("click", () => getCoffeeById(coffee.id));
-    editBtn.className = "btn btn-success btn-sm me-2";
+    editBtn.className = "btn btn-light btn-sm me-2 editBtn";
     buttonsTd.append(editBtn);
     tr.append(buttonsTd);
 
@@ -114,7 +114,7 @@ function rowC(coffee) {
     dImg.src = "../img/trash.svg"
     deleteBtn.append(dImg);
     deleteBtn.addEventListener("click", () => deleteCoffee(coffee.id));
-    deleteBtn.className = "btn btn-danger btn-sm me-2";
+    deleteBtn.className = "btn btn-light btn-sm me-2 deleteBtn";
     buttonsTd.append(deleteBtn);
     tr.append(buttonsTd);
 
@@ -251,7 +251,7 @@ function rowR(roasting) {
     eImg.src = "../img/pencil-square.svg";
     editBtn.append(eImg);
     editBtn.addEventListener("click", () => getRoasting(roasting.id));
-    editBtn.className = "btn btn-success btn-sm me-2";
+    editBtn.className = "btn btn-light btn-sm me-2 editBtn";
     buttonsTd.append(editBtn);
     tr.append(buttonsTd);
 
@@ -260,7 +260,7 @@ function rowR(roasting) {
     dImg.src = "../img/trash.svg"
     deleteBtn.append(dImg);
     deleteBtn.addEventListener("click", () => deleteRoasting(roasting.id));
-    deleteBtn.className = "btn btn-danger btn-sm me-2";
+    deleteBtn.className = "btn btn-light btn-sm me-2";
     buttonsTd.append(deleteBtn);
     tr.append(buttonsTd);
 

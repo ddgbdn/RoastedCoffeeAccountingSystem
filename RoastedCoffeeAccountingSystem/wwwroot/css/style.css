@@ -1,73 +1,14 @@
-
-* {
-    box-sizing: border-box;
+thead {
+    position: sticky;
+    top: -1px;
 }
 
-body {
-    margin: 0;
+.greenCoffeeRow, .dashboard, .roastingsRow {
+    background-color: #1a1a1a;
 }
 
-table {
-    border: 1px solid black;
-    width: 100%;
-}
-
-th,
-td {
-    border: 1px solid black;
+.bodyBack {
+    background-color: #262626;
 }
 
 
-button {
-    margin: 5px;
-}
-
-form {
-    margin: 0px 10px;
-    border: 1px solid black;
-    padding: 15px;
-}
-
-input, select {
-    width: 100%;
-    padding: 5px;
-    margin: 8px 0;
-    display: inline-block;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-sizing: border-box;
-}
-
-.saveBtn {
-    margin: 5px 0;
-    display: inline-block;
-}
-
-.greenCoffee-container, .roastings-container {
-    width: 50%;
-    display: table;
-    float: left;
-}
-
-.row:after {
-    content: "";
-    display: table;
-    clear: both;
-}
-
-.column {
-    float: left;
-    padding: 10px;
-}
-
-    .column.form {
-        width: 30%;
-    }
-
-    .column.table {
-        width: 70%;
-    }
-
-    .dashboardContainer{
-        height: 500px;
-    }

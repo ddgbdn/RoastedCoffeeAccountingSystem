@@ -5,127 +5,137 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title></title>
     <link rel="stylesheet" href="lib/bootstrap/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="css/style.css" />
 </head>
-<body class="text-bg-dark">
-	<div class="container-fluid ">
-		<div class="row">
-			<div class="col">
-				<div class="row py-4">
-					<div class="col-8">
-						<table class="table table-dark table-striped table-hover align-middle rounded-3">
-							<thead class="table-active">
-								<tr>
-									<th>Variety</th>
-									<th>Country</th>
-									<th>Region</th>
-									<th>Weight</th>
-									<th>Actions</th>
-								</tr>
-							</thead>
-							<tbody id="coffeeTable" class="table-group-divider">
-							</tbody>
-						</table>
-					</div>
-					<div class="col-4">
-						<form id="greenCoffee-form" class="border border-secondary border-1 rounded-3 text-bg-dark p-3">
-							<h3 class="text-center mb-3">Green coffee form</h3>
-							<input type="hidden" id="cid" name="id" />
-							<div class="mb-2">
-								<div class="row">
-									<div class="col-3">
-										<label for="variety">Variety:</label>
-									</div>
-									<div class="col-9">
-										<input id="variety" name="variety" class="form-control form-control-sm" />
-									</div>
-								</div>
-							</div>
-							<div class="mb-2">
-								<div class="row">
-									<div class="col-3">
-										<label for="country">Country:</label>
-									</div>
-									<div class="col-9">
-										<input id="country" name="country" class="form-control form-control-sm" />
-									</div>
-								</div>
-							</div>
-							<div class="mb-2">
-								<div class="row">
-									<div class="col-3">
-										<label for="region">Region:</label>
-									</div>
-									<div class="col-9">
-										<input id="region" name="region" class="form-control form-control-sm" />
-									</div>
-								</div>
-							</div>
-							<div class="mb-3">
-								<div class="row">
-									<div class="col-3">
-										<label for="weight">Weight</label>
-									</div>
-									<div class="col-9">
-										<input id="weight" name="weight" class="form-control form-control-sm" />
-									</div>
-								</div>
-							</div>
-                            <div class="d-grid">
-								<button type="submit" class="btn btn-secondary btn-sm">Save</button>
-							</div>						
-						</form>
-					</div>
-				</div>
-			</div>
-			<div class="col">
-				<div class="row py-4">
-					<div class="col-8">
-						<table class="table table-dark table-striped table-hover align-middle rounded-3">
-							<thead class="table-active">
-								<tr>
-									<th>Coffee</th>
-									<th>Amount</th>
-									<th>Date</th>
-									<th>Actions</th>
-								</tr>
-							</thead>
-							<tbody id="roastingsTable" class="table-group-divider">
-							</tbody>
-						</table>
-					</div>
-					<div class="col-4">
-						<form id="roastings-form" class="border border-secondary border-1 rounded-3 text-bg-dark p-3">
-							<h3 class="text-center mb-3">Roasting form</h3>
-							<input type="hidden" id="id" name="id" />
-							<div class="mb-2">
-								<div class="row">
-									<div class="col-3">
-										<label for="coffeeid">Coffee:</label>
-									</div>
-									<div class="col-9">
-										<select name="coffeeid" id="coffeeid" class="form-select form-select-sm"></select>
-									</div>
-								</div>
-							</div>
-							<div class="mb-3">
-								<div class="row">
-									<div class="col-3">
-										<label for="amount">Amount:</label>
-									</div>
-									<div class="col-9">
-										<input name="amount" id="amount" class="form-control form-control-sm" />
-									</div>
-								</div>
-							</div>
-							<div class="d-grid">
-								<button type="submit" class="btn btn-secondary btn-sm">Save</button>
-							</div>
-						</form>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+<body class="text-bg-dark">     
+        <div class="container-fluid vh-100 overflow-hidden bodyBack">
+            <div class="container-fluid h-50 py-2 px-0">
+                <div class="container-fluid border border-secondary rounded-3 dashboard h-100">
+
+                </div>
+            </div>
+            <div class="container-fluid tablesDiv h-50">
+                <div class="row h-100 gx-5">
+                    <div class="col h-100">
+                        <div class="row py-3 h-100 border border-1 border-secondary rounded-2 greenCoffeeRow">
+                            <div class="col-8 h-100">
+                                <div class="verticalScroll h-100 overflow-auto">
+                                    <table class="table table-dark table-striped table-hover align-middle rounded-3">
+                                        <thead class="table-active">
+                                            <tr>
+                                                <th>Variety</th>
+                                                <th>Country</th>
+                                                <th>Region</th>
+                                                <th>Weight</th>
+                                                <th>Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="coffeeTable" class="">
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <form id="greenCoffee-form" class="border border-secondary border-1 rounded-3 text-bg-dark p-3">
+                                    <h3 class="text-center mb-3">Green coffee form</h3>
+                                    <input type="hidden" id="cid" name="id" />
+                                    <div class="mb-2">
+                                        <div class="row">
+                                            <div class="col-3">
+                                                <label for="variety">Variety:</label>
+                                            </div>
+                                            <div class="col-9">
+                                                <input id="variety" name="variety" class="form-control form-control-sm" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="mb-2">
+                                        <div class="row">
+                                            <div class="col-3">
+                                                <label for="country">Country:</label>
+                                            </div>
+                                            <div class="col-9">
+                                                <input id="country" name="country" class="form-control form-control-sm" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="mb-2">
+                                        <div class="row">
+                                            <div class="col-3">
+                                                <label for="region">Region:</label>
+                                            </div>
+                                            <div class="col-9">
+                                                <input id="region" name="region" class="form-control form-control-sm" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <div class="row">
+                                            <div class="col-3">
+                                                <label for="weight">Weight</label>
+                                            </div>
+                                            <div class="col-9">
+                                                <input id="weight" name="weight" class="form-control form-control-sm" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="d-grid">
+                                        <button type="submit" class="btn btn-secondary btn-sm">Save</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col h-100">
+                        <div class="row h-100 pt-2 border border-1 border-secondary rounded-2 roastingsRow">
+                            <div class="col-8 h-100">
+                                <table class="table table-dark table-striped table-hover align-middle rounded-3">
+                                    <thead class="table-active">
+                                        <tr>
+                                            <th>Coffee</th>
+                                            <th>Amount</th>
+                                            <th>Date</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="roastingsTable" class="table-group-divider">
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="col-4">
+                                <form id="roastings-form" class="border border-secondary border-1 rounded-3 text-bg-dark p-3">
+                                    <h3 class="text-center mb-3">Roasting form</h3>
+                                    <input type="hidden" id="id" name="id" />
+                                    <div class="mb-2">
+                                        <div class="row">
+                                            <div class="col-3">
+                                                <label for="coffeeid">Coffee:</label>
+                                            </div>
+                                            <div class="col-9">
+                                                <select name="coffeeid" id="coffeeid" class="form-select form-select-sm"></select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <div class="row">
+                                            <div class="col-3">
+                                                <label for="amount">Amount:</label>
+                                            </div>
+                                            <div class="col-9">
+                                                <input name="amount" id="amount" class="form-control form-control-sm" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="d-grid">
+                                        <button type="submit" class="btn btn-secondary btn-sm">Save</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>    
     <script src="js/index.js"></script>
 </body>
 </html>
