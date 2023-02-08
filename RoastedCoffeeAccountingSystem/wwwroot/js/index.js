@@ -230,7 +230,7 @@ function rowR(roasting) {
     tr.setAttribute("data-rowid", roasting.id);
 
     const coffeeTd = document.createElement("td");
-    coffeeTd.append(roasting.coffee.country + (roasting.coffee.region == "" ? "" : " | " + roasting.coffee.region));
+    coffeeTd.append(roasting.coffee.country + " " + roasting.coffee.region);
     tr.append(coffeeTd);
 
     const amountTd = document.createElement("td");
