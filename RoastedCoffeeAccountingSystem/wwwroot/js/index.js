@@ -9,9 +9,9 @@
         const rows = document.getElementById("coffeeTable");
         coffee.forEach(c => rows.prepend(rowC(c)));
     }
-    else 
+    else
         console.log(await response.json());
-    
+
 };
 
 async function getCoffeeById(id) {
@@ -28,7 +28,7 @@ async function getCoffeeById(id) {
     }
     else
         console.log(await response.json());
-}
+} a
 
 async function createCoffee(coffee) {
     var response = await fetch("/api/GreenCoffee", {
@@ -38,7 +38,7 @@ async function createCoffee(coffee) {
     });
 
     if (response.ok)
-        document.getElementById("coffeeTable").prepend(rowC(await response.json()));    
+        document.getElementById("coffeeTable").prepend(rowC(await response.json()));
     else
         console.log(await response.json());
 
@@ -49,7 +49,7 @@ async function createCoffee(coffee) {
 async function updateCoffee(coffee) {
     var response = await fetch(`/api/GreenCoffee/${coffee.id}`, {
         method: "PUT",
-        headers: { "Content-Type": "application/json"},
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(coffee)
     });
 
@@ -69,8 +69,8 @@ async function deleteCoffee(id) {
         headers: { "Accept": "application/json" }
     });
 
-    if (response.ok) 
-        document.querySelector(`#coffeeTable tr[data-rowid='${id}']`).remove();    
+    if (response.ok)
+        document.querySelector(`#coffeeTable tr[data-rowid='${id}']`).remove();
     else
         console.log(await response.json());
 
@@ -96,7 +96,7 @@ function rowC(coffee) {
     const weightTd = document.createElement("td");
     weightTd.append(coffee.weight);
     tr.append(weightTd);
-    
+
     const buttonsTd = document.createElement("td");
     buttonsTd.className = "d-block gap-2"
 
@@ -121,7 +121,7 @@ function rowC(coffee) {
     return tr;
 }
 
-(async function() {
+(async function () {
     const formEl = document.getElementById("greenCoffee-form");
     formEl.addEventListener("submit", async (event) => {
         event.preventDefault();
@@ -200,7 +200,7 @@ async function createRoasting(roasting) {
 async function updateRoasting(roasting) {
     const response = await fetch(`/api/Roastings/${roasting.id}`, {
         method: "PUT",
-        headers: {"Content-Type": "application/json"},
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(roasting)
     });
 
@@ -269,8 +269,8 @@ function rowR(roasting) {
 
 function resetRoastingsForm() {
     document.querySelector("#roastings-form input[name='id']").value =
-    document.getElementById("coffeeid").value =
-    document.getElementById("amount").value = "";
+        document.getElementById("coffeeid").value =
+        document.getElementById("amount").value = "";
 }
 
 function coffeeOption(coffee) {
@@ -320,8 +320,8 @@ async function getOptions() {
 };
 
 function removeAll(selectBox) {
-    while (selectBox.options.length > 0) 
-        selectBox.remove(0);    
+    while (selectBox.options.length > 0)
+        selectBox.remove(0);
 }
 
 getRoastings();

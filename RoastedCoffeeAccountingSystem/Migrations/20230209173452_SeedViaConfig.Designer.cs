@@ -5,15 +5,14 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using RoastedCoffeeAccountingSystem.Models;
 
 #nullable disable
 
 namespace RoastedCoffeeAccountingSystem.Migrations
 {
-    [DbContext(typeof(ApplicationContext))]
-    [Migration("20230114193154_InitialCreate")]
-    partial class InitialCreate
+    [DbContext(typeof(RepositoryContext))]
+    [Migration("20230209173452_SeedViaConfig")]
+    partial class SeedViaConfig
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -34,12 +33,12 @@ namespace RoastedCoffeeAccountingSystem.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Country")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(60)
+                        .HasColumnType("nvarchar(60)");
 
                     b.Property<string>("Region")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(60)
+                        .HasColumnType("nvarchar(60)");
 
                     b.Property<string>("Variety")
                         .IsRequired()
@@ -51,6 +50,32 @@ namespace RoastedCoffeeAccountingSystem.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("GreenCoffee");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Country = "Brazil",
+                            Region = "Santos",
+                            Variety = "Arabica",
+                            Weight = 59.5
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Country = "Columbia",
+                            Region = "Excelso",
+                            Variety = "Arabica",
+                            Weight = 70.0
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Country = "Uganda",
+                            Region = "Uganda",
+                            Variety = "Robusta",
+                            Weight = 20.0
+                        });
                 });
 
             modelBuilder.Entity("RoastedCoffeeAccountingSystem.Models.Roasting", b =>
@@ -68,24 +93,45 @@ namespace RoastedCoffeeAccountingSystem.Migrations
                         .HasColumnType("int");
 
                     b.Property<DateTime>("Date")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("Date");
 
                     b.HasKey("Id");
 
                     b.HasIndex("CoffeeId");
 
                     b.ToTable("Roastings");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Amount = 8.1199999999999992,
+                            CoffeeId = 1,
+                            Date = new DateTime(2023, 2, 9, 23, 34, 51, 963, DateTimeKind.Local).AddTicks(9898)
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Amount = 4.0199999999999996,
+                            CoffeeId = 2,
+                            Date = new DateTime(2023, 2, 9, 23, 34, 51, 963, DateTimeKind.Local).AddTicks(9911)
+                        });
                 });
 
             modelBuilder.Entity("RoastedCoffeeAccountingSystem.Models.Roasting", b =>
                 {
                     b.HasOne("RoastedCoffeeAccountingSystem.Models.GreenCoffee", "Coffee")
-                        .WithMany()
+                        .WithMany("Roastings")
                         .HasForeignKey("CoffeeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Coffee");
+                });
+
+            modelBuilder.Entity("RoastedCoffeeAccountingSystem.Models.GreenCoffee", b =>
+                {
+                    b.Navigation("Roastings");
                 });
 #pragma warning restore 612, 618
         }
