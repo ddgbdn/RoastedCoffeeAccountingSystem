@@ -1,10 +1,13 @@
 using RoastedCoffeeAccountingSystem.Models;
 using Microsoft.EntityFrameworkCore;
 using NLog;
+using RoastedCoffeeAccountingSystem.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
 LogManager.LoadConfiguration(Path.Combine(Directory.GetCurrentDirectory(), "/nlog.config"));
+
+builder.Services.ConfigureLoggerService();
 
 // Add services to the container.
 
