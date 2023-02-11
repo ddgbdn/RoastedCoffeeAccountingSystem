@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Repository.Configuration;
 using RoastedCoffeeAccountingSystem.Models;
-using System.Collections.Generic;
 
 public class RepositoryContext : DbContext
 {

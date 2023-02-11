@@ -1,5 +1,3 @@
-using RoastedCoffeeAccountingSystem.Models;
-using Microsoft.EntityFrameworkCore;
 using NLog;
 using RoastedCoffeeAccountingSystem.Extensions;
 
@@ -10,6 +8,9 @@ LogManager.LoadConfiguration(Path.Combine(Directory.GetCurrentDirectory(), "/nlo
 builder.Services.ConfigureLoggerService();
 
 // Add services to the container.
+builder.Services.ConfigureSQLContext(builder.Configuration);
+builder.Services.ConfigureRepositoryManager();
+builder.Services.ConfigureServiceManager();
 
 builder.Services.AddControllers();
 

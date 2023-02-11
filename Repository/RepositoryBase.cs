@@ -1,11 +1,6 @@
 ﻿using Contracts;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Repository
 {
@@ -27,7 +22,7 @@ namespace Repository
                     .Where(condition)
                     .AsNoTracking()
                 : RepositoryContext.Set<T>()
-                    .Where(condition);                
+                    .Where(condition);
 
         public void Create(T entity) => RepositoryContext.Set<T>().Add(entity);
         public void Delete(T entity) => RepositoryContext.Set<T>().Remove(entity);
