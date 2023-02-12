@@ -14,15 +14,9 @@ namespace RoastedCoffeeAccountingSystem.Controllers
         [HttpGet]
         public IActionResult GetCoffee()
         {
-            try
-            {
-                var coffee = _service.GreenCoffeeService.GetAllGreenCoffee(false);
-                return Ok(coffee);
-            }
-            catch
-            {
-                return StatusCode(500, "Internal server error");
-            }
+            throw new Exception("eblan");
+            var coffee = _service.GreenCoffeeService.GetAllGreenCoffee(false);
+            return Ok(coffee);              
         }
     }
 }

@@ -1,10 +1,10 @@
+using Contracts;
 using NLog;
 using RoastedCoffeeAccountingSystem.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
-LogManager.LoadConfiguration(Path.Combine(Directory.GetCurrentDirectory(), "/nlog.config"));
-
+LogManager.LoadConfiguration(string.Concat(Directory.GetCurrentDirectory(), "/nlog.config"));
 builder.Services.ConfigureLoggerService();
 
 // Add services to the container.
@@ -20,6 +20,11 @@ builder.Services.AddControllers().AddApplicationPart(typeof(Presentation.Assembl
 
 var app = builder.Build();
 
+app.ConfigureExceptionHandler(app.Services.GetRequiredService<ILoggerManager>());
+
+if (app.Environment.IsDevelopment())
+    app.UseHsts();
+
 //Configure the HTTP request pipeline.
 //if (app.Environment.IsDevelopment())
 //{
@@ -27,8 +32,8 @@ var app = builder.Build();
 //    app.UseSwaggerUI();
 //}
 
-//app.UseDefaultFiles();
-//app.UseStaticFiles();
+app.UseDefaultFiles();
+app.UseStaticFiles();
 
 app.UseHttpsRedirection();
 

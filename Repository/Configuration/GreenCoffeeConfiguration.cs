@@ -31,7 +31,7 @@ namespace Repository.Configuration
                     Id = 3,
                     Variety = "Robusta",
                     Country = "Uganda",
-                    Region = "Uganda",
+                    Region = null,
                     Weight = 20
                 }
             );

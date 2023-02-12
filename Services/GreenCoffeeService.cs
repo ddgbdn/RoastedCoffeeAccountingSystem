@@ -1,6 +1,7 @@
 ﻿using Contracts;
 using RoastedCoffeeAccountingSystem.Models;
 using ServiceContracts;
+using Shared.DataTransferObjects;
 
 namespace Services
 {
@@ -15,17 +16,19 @@ namespace Services
             _logger = logger;
         }
 
-        public IEnumerable<GreenCoffee> GetAllGreenCoffee(bool trackChanges)
+        public IEnumerable<GreenCoffeeDto> GetAllGreenCoffee(bool trackChanges)
         {
-            try
-            {
-                return _repository.GreenCoffee.GetAllGreenCoffee(trackChanges);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError($"Error occured in the {nameof(GetAllGreenCoffee)}. {ex}");
-                throw;
-            }
+                var coffee = _repository.GreenCoffee.GetAllGreenCoffee(trackChanges);
+
+                var coffeeDto = coffee // AutoMapper?
+                    .Select(c => new GreenCoffeeDto(
+                        c.Id,
+                        c.Variety,
+                        string.Join(' ', c.Country, c.Region).TrimEnd(),
+                        c.Weight))
+                    .ToList();
+
+                return coffeeDto;            
         }
     }
 }

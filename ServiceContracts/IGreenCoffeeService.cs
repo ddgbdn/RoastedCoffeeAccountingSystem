@@ -1,9 +1,9 @@
-﻿using RoastedCoffeeAccountingSystem.Models;
+﻿using Shared.DataTransferObjects;
 
 namespace ServiceContracts
 {
     public interface IGreenCoffeeService
     {
-        IEnumerable<GreenCoffee> GetAllGreenCoffee(bool trackChanges);
+        IEnumerable<GreenCoffeeDto> GetAllGreenCoffee(bool trackChanges);
     }
 }
