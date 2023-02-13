@@ -7,6 +7,8 @@ var builder = WebApplication.CreateBuilder(args);
 LogManager.LoadConfiguration(string.Concat(Directory.GetCurrentDirectory(), "/nlog.config"));
 builder.Services.ConfigureLoggerService();
 
+builder.Services.AddAutoMapper(typeof(Program));
+
 // Add services to the container.
 builder.Services.ConfigureSQLContext(builder.Configuration);
 builder.Services.ConfigureRepositoryManager();

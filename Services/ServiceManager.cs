@@ -1,4 +1,5 @@
-﻿using Contracts;
+﻿using AutoMapper;
+using Contracts;
 using ServiceContracts;
 
 namespace Services
@@ -8,12 +9,12 @@ namespace Services
         private readonly Lazy<IGreenCoffeeService> _greenCoffeeService;
         private readonly Lazy<IRoastingsService> _roastingsService;
 
-        public ServiceManager(IRepositoryManager repositoryManager, ILoggerManager logger)
+        public ServiceManager(IRepositoryManager repositoryManager, ILoggerManager logger, IMapper mapper)
         {
             _greenCoffeeService = new Lazy<IGreenCoffeeService>(()
-                => new GreenCoffeeService(repositoryManager, logger));
+                => new GreenCoffeeService(repositoryManager, logger, mapper));
             _roastingsService = new Lazy<IRoastingsService>(()
-                => new RoastingsService(repositoryManager, logger));
+                => new RoastingsService(repositoryManager, logger, mapper));
         }
 
         public IGreenCoffeeService GreenCoffeeService => _greenCoffeeService.Value;

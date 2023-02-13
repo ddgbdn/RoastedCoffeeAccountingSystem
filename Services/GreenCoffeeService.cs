@@ -1,4 +1,6 @@
-﻿using Contracts;
+﻿using AutoMapper;
+using Contracts;
+using Entities.Exceptions;
 using RoastedCoffeeAccountingSystem.Models;
 using ServiceContracts;
 using Shared.DataTransferObjects;
@@ -9,26 +11,29 @@ namespace Services
     {
         private readonly IRepositoryManager _repository;
         private readonly ILoggerManager _logger;
+        private readonly IMapper _mapper;
 
-        public GreenCoffeeService(IRepositoryManager repository, ILoggerManager logger)
+        public GreenCoffeeService(IRepositoryManager repository, ILoggerManager logger, IMapper mapper)
         {
             _repository = repository;
             _logger = logger;
+            _mapper = mapper;
         }
 
         public IEnumerable<GreenCoffeeDto> GetAllGreenCoffee(bool trackChanges)
         {
                 var coffee = _repository.GreenCoffee.GetAllGreenCoffee(trackChanges);
 
-                var coffeeDto = coffee // AutoMapper?
-                    .Select(c => new GreenCoffeeDto(
-                        c.Id,
-                        c.Variety,
-                        string.Join(' ', c.Country, c.Region).TrimEnd(),
-                        c.Weight))
-                    .ToList();
+                return _mapper.Map<IEnumerable<GreenCoffeeDto>>(coffee);     
+        }
 
-                return coffeeDto;            
+        public GreenCoffeeDto GetGreenCoffee(int id, bool trackChanges)
+        {
+            var coffee = _repository.GreenCoffee.GetGreenCoffee(id, trackChanges);
+            if (coffee is null)
+                throw new GreenCoffeeNotFoundException(id);
+
+            return _mapper.Map<GreenCoffeeDto>(coffee);
         }
     }
 }

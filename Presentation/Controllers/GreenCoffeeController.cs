@@ -12,11 +12,17 @@ namespace RoastedCoffeeAccountingSystem.Controllers
         public GreenCoffeeController(IServiceManager service) => _service = service;
 
         [HttpGet]
-        public IActionResult GetCoffee()
+        public IActionResult GetAllCoffee()
         {
-            throw new Exception("eblan");
             var coffee = _service.GreenCoffeeService.GetAllGreenCoffee(false);
-            return Ok(coffee);              
+            return Ok(coffee);
+        }
+
+        [HttpGet("{id:int}")]
+        public IActionResult GetCoffee(int id)
+        {
+            var coffee = _service.GreenCoffeeService.GetGreenCoffee(id, false);
+            return Ok(coffee);
         }
     }
 }

@@ -13,5 +13,9 @@ namespace Repository
             => FindAll(trackChanges)
                 .OrderByDescending(c => c.Id)
                 .ToList();
+
+        public GreenCoffee GetGreenCoffee(int id, bool trackChanges)
+            => FindByCondition(c => c.Id == id, trackChanges)
+                .SingleOrDefault();
     }
 }
