@@ -6,5 +6,6 @@ namespace ServiceContracts
     {
         IEnumerable<RoastingDto> GetRoastings(bool trackChanges);
         RoastingDto GetRoasting(int id, bool trackChanges);
+        RoastingDto CreateRoasting(RoastingCreationDto roasting);
     }
 }

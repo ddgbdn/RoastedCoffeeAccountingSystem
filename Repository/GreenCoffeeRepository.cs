@@ -9,6 +9,7 @@ namespace Repository
         {
         }
 
+
         public IEnumerable<GreenCoffee> GetAllGreenCoffee(bool trackChanges)
             => FindAll(trackChanges)
                 .OrderByDescending(c => c.Id)
@@ -17,5 +18,7 @@ namespace Repository
         public GreenCoffee GetGreenCoffee(int id, bool trackChanges)
             => FindByCondition(c => c.Id == id, trackChanges)
                 .SingleOrDefault();
+
+        public void CreateGreenCoffee(GreenCoffee greenCoffee) => Create(greenCoffee);
     }
 }

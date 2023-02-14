@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ServiceContracts;
+using Shared.DataTransferObjects;
 
 namespace RoastedCoffeeAccountingSystem.Controllers
 {
@@ -23,6 +24,16 @@ namespace RoastedCoffeeAccountingSystem.Controllers
         {
             var coffee = _service.GreenCoffeeService.GetGreenCoffee(id, false);
             return Ok(coffee);
+        }
+
+        [HttpPost]
+        public IActionResult CreateCoffee([FromBody] GreenCoffeeCreationDto coffee)
+        {
+            if (coffee is null)
+                return BadRequest("GreenCoffeeCreation object is null");
+
+            var createdCoffee = _service.GreenCoffeeService.CreateGreenCoffee(coffee);
+            return CreatedAtAction(nameof(GetCoffee), new {id = createdCoffee.Id}, createdCoffee);
         }
     }
 }

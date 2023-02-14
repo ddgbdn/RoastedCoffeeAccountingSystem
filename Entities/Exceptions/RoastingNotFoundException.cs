@@ -8,7 +8,7 @@ namespace Entities.Exceptions
 {
     public sealed class RoastingNotFoundException : NotFoundException
     {
-        public RoastingNotFoundException(int id) : base($"The roasting with id: {id} could not be found") 
+        public RoastingNotFoundException(int id) : base($"Roasting with id: {id} could not be found") 
         {
         }
     }

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ServiceContracts;
+using Shared.DataTransferObjects;
 
 namespace RoastedCoffeeAccountingSystem.Controllers
 {
@@ -26,6 +27,15 @@ namespace RoastedCoffeeAccountingSystem.Controllers
         {
             var roasting = _service.RoastingsService.GetRoasting(id, false);
             return Ok(roasting);
+        }
+
+        public IActionResult CreateRoasting([FromBody] RoastingCreationDto roasting)
+        {
+            if (roasting == null)
+                return BadRequest("RoastingCreation object is null");
+
+            var roastingEntity = _service.RoastingsService.CreateRoasting(roasting);
+            return CreatedAtAction(nameof(GetRoasting), new { id = roastingEntity.Id }, roastingEntity);
         }
     }
 }

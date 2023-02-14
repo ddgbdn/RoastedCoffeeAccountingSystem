@@ -6,5 +6,6 @@ namespace Contracts
     {
         IEnumerable<Roasting> GetRoastings(bool trackChanges);
         Roasting GetRoasting(int id, bool trackChanges);
+        void CreateRoasting(Roasting roasting);
     }
 }

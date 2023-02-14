@@ -1,4 +1,5 @@
 using Contracts;
+using Microsoft.AspNetCore.Mvc;
 using NLog;
 using RoastedCoffeeAccountingSystem.Extensions;
 
@@ -14,6 +15,10 @@ builder.Services.ConfigureSQLContext(builder.Configuration);
 builder.Services.ConfigureRepositoryManager();
 builder.Services.ConfigureServiceManager();
 
+builder.Services.Configure<ApiBehaviorOptions>(opt =>
+{
+    opt.SuppressModelStateInvalidFilter = true;
+});
 builder.Services.AddControllers().AddApplicationPart(typeof(Presentation.AssemblyReference).Assembly);
 
 //Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

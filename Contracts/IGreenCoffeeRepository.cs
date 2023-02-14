@@ -6,5 +6,6 @@ namespace Contracts
     {
         IEnumerable<GreenCoffee> GetAllGreenCoffee(bool trackChanges);
         GreenCoffee GetGreenCoffee(int id, bool trackChanges);
+        void CreateGreenCoffee(GreenCoffee greenCoffee);
     }
 }

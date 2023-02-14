@@ -20,6 +20,7 @@ namespace Services
             _mapper = mapper;
         }
 
+
         public IEnumerable<GreenCoffeeDto> GetAllGreenCoffee(bool trackChanges)
         {
                 var coffee = _repository.GreenCoffee.GetAllGreenCoffee(trackChanges);
@@ -34,6 +35,15 @@ namespace Services
                 throw new GreenCoffeeNotFoundException(id);
 
             return _mapper.Map<GreenCoffeeDto>(coffee);
+        }
+        public GreenCoffeeDto CreateGreenCoffee(GreenCoffeeCreationDto greenCoffee)
+        {
+            var coffeeEntity = _mapper.Map<GreenCoffee>(greenCoffee);
+
+            _repository.GreenCoffee.CreateGreenCoffee(coffeeEntity);
+            _repository.Save();
+
+            return _mapper.Map<GreenCoffeeDto>(coffeeEntity);
         }
     }
 }

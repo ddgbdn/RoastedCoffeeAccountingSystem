@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Contracts;
 using Entities.Exceptions;
+using RoastedCoffeeAccountingSystem.Models;
 using ServiceContracts;
 using Shared.DataTransferObjects;
 
@@ -33,6 +34,16 @@ namespace Services
                 throw new RoastingNotFoundException(id);
 
             return _mapper.Map<RoastingDto>(roasting);
+        }
+
+        public RoastingDto CreateRoasting(RoastingCreationDto roasting)
+        {
+            var roastingEntity = _mapper.Map<Roasting>(roasting);
+
+            _repository.Roastings.CreateRoasting(roastingEntity);
+            _repository.Save();
+
+            return _mapper.Map<RoastingDto>(roastingEntity);
         }
     }
 }

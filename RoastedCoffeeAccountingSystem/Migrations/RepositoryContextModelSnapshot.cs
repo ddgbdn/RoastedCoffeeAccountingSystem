@@ -46,7 +46,7 @@ namespace RoastedCoffeeAccountingSystem.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("GreenCoffee");
+                    b.ToTable("GreenCoffee", (string)null);
 
                     b.HasData(
                         new
@@ -96,7 +96,7 @@ namespace RoastedCoffeeAccountingSystem.Migrations
 
                     b.HasIndex("CoffeeId");
 
-                    b.ToTable("Roastings");
+                    b.ToTable("Roastings", (string)null);
 
                     b.HasData(
                         new

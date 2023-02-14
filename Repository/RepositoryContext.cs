@@ -7,12 +7,25 @@ public class RepositoryContext : DbContext
     public RepositoryContext(DbContextOptions options)
     : base(options)
     {
-        Database.EnsureCreated();
+        //Database.EnsureCreated();
     }
 
     public DbSet<GreenCoffee>? GreenCoffee { get; set; }
     public DbSet<Roasting>? Roastings { get; set; }
 
+    public override int SaveChanges()
+    {
+        var today = DateTime.Now.Date;
+
+        foreach (var changedEntity in ChangeTracker.Entries())
+            if (changedEntity.Entity is Roasting entity)
+                if (changedEntity.State == EntityState.Added)
+                    entity.Date = today;
+
+        return base.SaveChanges();
+    }
+
+    // Date generates automatically on save
     public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {
         var today = DateTime.Now.Date;

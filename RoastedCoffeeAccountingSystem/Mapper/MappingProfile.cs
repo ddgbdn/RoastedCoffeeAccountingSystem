@@ -15,6 +15,10 @@ namespace RoastedCoffeeAccountingSystem.Mapper
             CreateMap<Roasting, RoastingDto>()
                 .ForCtorParam("CoffeeFullRegion",
                 opt => opt.MapFrom(r => string.Join(' ', r.Coffee.Country, r.Coffee.Region).TrimEnd()));
+
+            CreateMap<GreenCoffeeCreationDto, GreenCoffee>();
+
+            CreateMap<RoastingCreationDto, Roasting>();
         }
     }
 }
