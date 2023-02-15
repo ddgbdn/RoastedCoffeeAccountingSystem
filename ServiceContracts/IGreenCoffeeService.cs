@@ -7,5 +7,6 @@ namespace ServiceContracts
         IEnumerable<GreenCoffeeDto> GetAllGreenCoffee(bool trackChanges);
         GreenCoffeeDto GetGreenCoffee(int id, bool trackChanges);
         GreenCoffeeDto CreateGreenCoffee(GreenCoffeeCreationDto greenCoffee);
+        void DeleteGreenCoffee(int id, bool trackChanges);
     }
 }

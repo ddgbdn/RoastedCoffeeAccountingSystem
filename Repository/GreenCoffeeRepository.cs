@@ -20,5 +20,7 @@ namespace Repository
                 .SingleOrDefault();
 
         public void CreateGreenCoffee(GreenCoffee greenCoffee) => Create(greenCoffee);
+
+        public void DeleteGreenCoffee(GreenCoffee greenCoffee) => Delete(greenCoffee);
     }
 }

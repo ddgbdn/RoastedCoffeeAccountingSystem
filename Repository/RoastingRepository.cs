@@ -27,5 +27,7 @@ namespace Repository
             Create(roasting);
             roasting.Coffee = RepositoryContext.GreenCoffee!.Find(roasting.CoffeeId)!; // Feels wrong. REINSPECT    Don't map coffee full adress??
         }
+
+        public void DeleteRoasting(Roasting roasting) => Delete(roasting);
     }
 }

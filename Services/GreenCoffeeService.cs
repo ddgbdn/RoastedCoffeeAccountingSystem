@@ -36,6 +36,7 @@ namespace Services
 
             return _mapper.Map<GreenCoffeeDto>(coffee);
         }
+
         public GreenCoffeeDto CreateGreenCoffee(GreenCoffeeCreationDto greenCoffee)
         {
             var coffeeEntity = _mapper.Map<GreenCoffee>(greenCoffee);
@@ -44,6 +45,16 @@ namespace Services
             _repository.Save();
 
             return _mapper.Map<GreenCoffeeDto>(coffeeEntity);
+        }
+
+        public void DeleteGreenCoffee(int id, bool trackChanges)
+        {
+            var coffee = _repository.GreenCoffee.GetGreenCoffee(id, trackChanges);
+            if (coffee is null)
+                throw new GreenCoffeeNotFoundException(id);
+
+            _repository.GreenCoffee.DeleteGreenCoffee(coffee);
+            _repository.Save();
         }
     }
 }

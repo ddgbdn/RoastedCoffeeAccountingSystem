@@ -35,5 +35,12 @@ namespace RoastedCoffeeAccountingSystem.Controllers
             var createdCoffee = _service.GreenCoffeeService.CreateGreenCoffee(coffee);
             return CreatedAtAction(nameof(GetCoffee), new {id = createdCoffee.Id}, createdCoffee);
         }
+
+        [HttpDelete("{id:int}")]
+        public IActionResult DeleteCoffee(int id)
+        {
+            _service.GreenCoffeeService.DeleteGreenCoffee(id, false);
+            return NoContent();
+        }
     }
 }

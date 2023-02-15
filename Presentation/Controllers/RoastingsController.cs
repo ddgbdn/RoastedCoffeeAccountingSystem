@@ -29,6 +29,7 @@ namespace RoastedCoffeeAccountingSystem.Controllers
             return Ok(roasting);
         }
 
+        [HttpPost]
         public IActionResult CreateRoasting([FromBody] RoastingCreationDto roasting)
         {
             if (roasting == null)
@@ -36,6 +37,13 @@ namespace RoastedCoffeeAccountingSystem.Controllers
 
             var roastingEntity = _service.RoastingsService.CreateRoasting(roasting);
             return CreatedAtAction(nameof(GetRoasting), new { id = roastingEntity.Id }, roastingEntity);
+        }
+
+        [HttpDelete("{id:int}")]
+        public IActionResult DeleteRoasting(int id)
+        {
+            _service.RoastingsService.DeleteRoasting(id, false);
+            return NoContent();
         }
     }
 }
