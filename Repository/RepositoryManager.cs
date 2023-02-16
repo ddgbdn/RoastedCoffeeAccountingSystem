@@ -18,6 +18,6 @@ namespace Repository
         public IGreenCoffeeRepository GreenCoffee => _greenCoffeeRepository.Value;
         public IRoastingsRepository Roastings => _roastingsRepository.Value;
 
-        public void Save() => _repositoryContext.SaveChanges();
+        public async Task SaveAsync() => await _repositoryContext.SaveChangesAsync();
     }
 }

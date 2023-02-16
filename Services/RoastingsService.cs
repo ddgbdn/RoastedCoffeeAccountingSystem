@@ -21,49 +21,49 @@ namespace Services
         }
 
 
-        public IEnumerable<RoastingDto> GetRoastings(bool trackChanges)
+        public async Task<IEnumerable<RoastingDto>> GetRoastingsAsync(bool trackChanges)
         {
-            var roastings = _repository.Roastings.GetRoastings(trackChanges);
+            var roastings = await _repository.Roastings.GetRoastingsAsync(trackChanges);
             
             return _mapper.Map<IEnumerable<RoastingDto>>(roastings);
         }
-        public RoastingDto GetRoasting(int id, bool trackChanges)
+        public async Task<RoastingDto> GetRoastingAsync(int id, bool trackChanges)
         {
-            var roasting = _repository.Roastings.GetRoasting(id, trackChanges);
+            var roasting = await _repository.Roastings.GetRoastingAsync(id, trackChanges);
             if (roasting is null)
                 throw new RoastingNotFoundException(id);
 
             return _mapper.Map<RoastingDto>(roasting);
         }
 
-        public RoastingDto CreateRoasting(RoastingCreationDto roasting)
+        public async Task<RoastingDto> CreateRoastingAsync(RoastingCreationDto roasting)
         {
             var roastingEntity = _mapper.Map<Roasting>(roasting);
 
             _repository.Roastings.CreateRoasting(roastingEntity);
-            _repository.Save();
+            await _repository.SaveAsync();
 
             return _mapper.Map<RoastingDto>(roastingEntity);
         }
 
-        public void DeleteRoasting(int id, bool trackChanges)
+        public async Task DeleteRoastingAsync(int id, bool trackChanges)
         {
-            var roasting = _repository.Roastings.GetRoasting(id, trackChanges);
+            var roasting = await _repository.Roastings.GetRoastingAsync(id, trackChanges);
             if (roasting is null)
                 throw new RoastingNotFoundException(id);
 
             _repository.Roastings.DeleteRoasting(roasting);
-            _repository.Save();
+            await _repository.SaveAsync();
         }
 
-        public void UpdateRoasting(int id, RoastingUpdateDto roasting, bool trackChanges)
+        public async Task UpdateRoastingAsync(int id, RoastingUpdateDto roasting, bool trackChanges)
         {
-            var roastingEntity = _repository.Roastings.GetRoasting(id, trackChanges);
+            var roastingEntity = await _repository.Roastings.GetRoastingAsync(id, trackChanges);
             if (roastingEntity is null)
                 throw new RoastingNotFoundException(id);
 
             _mapper.Map(roasting, roastingEntity);
-            _repository.Save();
+            await _repository.SaveAsync();
         }
     }
 }

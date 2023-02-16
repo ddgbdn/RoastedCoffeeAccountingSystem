@@ -21,7 +21,7 @@ namespace RoastedCoffeeAccountingSystem.Extensions
                     {
                         context.Response.StatusCode = contextFeature.Error switch
                         {
-                            GreenCoffeeNotFoundException => StatusCodes.Status404NotFound,
+                            NotFoundException => StatusCodes.Status404NotFound,
                             _ => StatusCodes.Status500InternalServerError
                         };
 

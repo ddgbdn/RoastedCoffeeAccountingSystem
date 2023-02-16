@@ -4,8 +4,8 @@ namespace Contracts
 {
     public interface IGreenCoffeeRepository
     {
-        IEnumerable<GreenCoffee> GetAllGreenCoffee(bool trackChanges);
-        GreenCoffee GetGreenCoffee(int id, bool trackChanges);
+        Task<IEnumerable<GreenCoffee>> GetAllGreenCoffeeAsync(bool trackChanges);
+        Task<GreenCoffee?> GetGreenCoffeeAsync(int id, bool trackChanges);
         void CreateGreenCoffee(GreenCoffee greenCoffee);
         void DeleteGreenCoffee(GreenCoffee greenCoffee);
     }

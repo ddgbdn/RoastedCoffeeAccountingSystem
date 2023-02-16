@@ -21,50 +21,50 @@ namespace Services
         }
 
 
-        public IEnumerable<GreenCoffeeDto> GetAllGreenCoffee(bool trackChanges)
+        public async Task<IEnumerable<GreenCoffeeDto>> GetAllGreenCoffeeAsync(bool trackChanges)
         {
-                var coffee = _repository.GreenCoffee.GetAllGreenCoffee(trackChanges);
+                var coffee = await _repository.GreenCoffee.GetAllGreenCoffeeAsync(trackChanges);
 
                 return _mapper.Map<IEnumerable<GreenCoffeeDto>>(coffee);     
         }
 
-        public GreenCoffeeDto GetGreenCoffee(int id, bool trackChanges)
+        public async Task<GreenCoffeeDto> GetGreenCoffeeAsync(int id, bool trackChanges)
         {
-            var coffee = _repository.GreenCoffee.GetGreenCoffee(id, trackChanges);
+            var coffee = await _repository.GreenCoffee.GetGreenCoffeeAsync(id, trackChanges);
             if (coffee is null)
                 throw new GreenCoffeeNotFoundException(id);
 
             return _mapper.Map<GreenCoffeeDto>(coffee);
         }
 
-        public GreenCoffeeDto CreateGreenCoffee(GreenCoffeeCreationDto greenCoffee)
+        public async Task<GreenCoffeeDto> CreateGreenCoffeeAsync(GreenCoffeeCreationDto greenCoffee)
         {
             var coffeeEntity = _mapper.Map<GreenCoffee>(greenCoffee);
 
             _repository.GreenCoffee.CreateGreenCoffee(coffeeEntity);
-            _repository.Save();
+            await _repository.SaveAsync();
 
             return _mapper.Map<GreenCoffeeDto>(coffeeEntity);
         }
 
-        public void DeleteGreenCoffee(int id, bool trackChanges)
+        public async Task DeleteGreenCoffeeAsync(int id, bool trackChanges)
         {
-            var coffee = _repository.GreenCoffee.GetGreenCoffee(id, trackChanges);
+            var coffee = await _repository.GreenCoffee.GetGreenCoffeeAsync(id, trackChanges);
             if (coffee is null)
                 throw new GreenCoffeeNotFoundException(id);
 
             _repository.GreenCoffee.DeleteGreenCoffee(coffee);
-            _repository.Save();
+            await _repository.SaveAsync();
         }
 
-        public void UpdateGreenCoffee(int id, GreenCoffeeUpdateDto greenCoffee, bool trackChanges)
+        public async Task UpdateGreenCoffeeAsync(int id, GreenCoffeeUpdateDto greenCoffee, bool trackChanges)
         {
-            var coffeeEntity = _repository.GreenCoffee.GetGreenCoffee(id, trackChanges);
+            var coffeeEntity = await _repository.GreenCoffee.GetGreenCoffeeAsync(id, trackChanges);
             if (greenCoffee is null)
                 throw new GreenCoffeeNotFoundException(id);
 
             _mapper.Map(greenCoffee, coffeeEntity); // Modification is done here. 
-            _repository.Save();
+            await _repository.SaveAsync();
         }
     }
 }

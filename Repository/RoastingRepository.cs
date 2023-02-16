@@ -10,17 +10,17 @@ namespace Repository
         {
         }
 
-        public IEnumerable<Roasting> GetRoastings(bool trackChanges)
-            => FindAll(trackChanges)
+        public async Task<IEnumerable<Roasting>> GetRoastingsAsync(bool trackChanges)
+            => await FindAll(trackChanges)
                 .OrderByDescending(r => r.Id)
                 .Include(c => c.Coffee)
-                .ToList();
+                .ToListAsync();
 
-        public Roasting GetRoasting(int id, bool trackChanges)
-            => FindByCondition(r => r.Id == id, trackChanges)
+        public async Task<Roasting>GetRoastingAsync(int id, bool trackChanges)
+            => await FindByCondition(r => r.Id == id, trackChanges)
                 .OrderByDescending(r => r.Id)
                 .Include(c => c.Coffee)
-                .SingleOrDefault();
+                .SingleOrDefaultAsync();
 
         public void CreateRoasting(Roasting roasting)
         {

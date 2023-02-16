@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Shared.DataTransferObjects
 {
-    public record GreenCoffeeCreationDto(string Variety ,string Country, string Region, double Weight);
+    public record GreenCoffeeCreationDto : GreenCoffeeManipulationDto;
 }

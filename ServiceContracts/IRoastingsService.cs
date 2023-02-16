@@ -4,10 +4,10 @@ namespace ServiceContracts
 {
     public interface IRoastingsService
     {
-        IEnumerable<RoastingDto> GetRoastings(bool trackChanges);
-        RoastingDto GetRoasting(int id, bool trackChanges);
-        RoastingDto CreateRoasting(RoastingCreationDto roasting);
-        void DeleteRoasting(int id, bool trackChanges);
-        void UpdateRoasting(int id, RoastingUpdateDto roasting, bool trackChanges);
+        Task<IEnumerable<RoastingDto>> GetRoastingsAsync(bool trackChanges);
+        Task<RoastingDto> GetRoastingAsync(int id, bool trackChanges);
+        Task<RoastingDto> CreateRoastingAsync(RoastingCreationDto roasting);
+        Task DeleteRoastingAsync(int id, bool trackChanges);
+        Task UpdateRoastingAsync(int id, RoastingUpdateDto roasting, bool trackChanges);
     }
 }

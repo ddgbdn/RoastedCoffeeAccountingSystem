@@ -6,5 +6,5 @@ using System.Threading.Tasks;
 
 namespace Shared.DataTransferObjects
 {
-    public record RoastingUpdateDto(int CoffeeId, double Amount);
+    public record RoastingUpdateDto : RoastingManipulationDto;
 }

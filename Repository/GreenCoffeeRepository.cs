@@ -1,4 +1,5 @@
 ﻿using Contracts;
+using Microsoft.EntityFrameworkCore;
 using RoastedCoffeeAccountingSystem.Models;
 
 namespace Repository
@@ -10,14 +11,14 @@ namespace Repository
         }
 
 
-        public IEnumerable<GreenCoffee> GetAllGreenCoffee(bool trackChanges)
-            => FindAll(trackChanges)
+        public async Task<IEnumerable<GreenCoffee>> GetAllGreenCoffeeAsync(bool trackChanges)
+            => await FindAll(trackChanges)
                 .OrderByDescending(c => c.Id)
-                .ToList();
+                .ToListAsync();
 
-        public GreenCoffee GetGreenCoffee(int id, bool trackChanges)
-            => FindByCondition(c => c.Id == id, trackChanges)
-                .SingleOrDefault();
+        public async Task<GreenCoffee?> GetGreenCoffeeAsync(int id, bool trackChanges)
+            => await FindByCondition(c => c.Id == id, trackChanges)
+                .SingleOrDefaultAsync();
 
         public void CreateGreenCoffee(GreenCoffee greenCoffee) => Create(greenCoffee);
 

@@ -13,43 +13,46 @@ namespace RoastedCoffeeAccountingSystem.Controllers
         public GreenCoffeeController(IServiceManager service) => _service = service;
 
         [HttpGet]
-        public IActionResult GetAllCoffee()
+        public async Task<IActionResult> GetAllCoffee()
         {
-            var coffee = _service.GreenCoffeeService.GetAllGreenCoffee(false);
+            var coffee = await _service.GreenCoffeeService.GetAllGreenCoffeeAsync(false);
             return Ok(coffee);
         }
 
         [HttpGet("{id:int}")]
-        public IActionResult GetCoffee(int id)
+        public async Task<IActionResult> GetCoffee(int id)
         {
-            var coffee = _service.GreenCoffeeService.GetGreenCoffee(id, false);
+            var coffee = await _service.GreenCoffeeService.GetGreenCoffeeAsync(id, false);
             return Ok(coffee);
         }
 
         [HttpPost]
-        public IActionResult CreateCoffee([FromBody] GreenCoffeeCreationDto coffee)
+        public async Task<IActionResult> CreateCoffee([FromBody] GreenCoffeeCreationDto coffee)
         {
             if (coffee is null)
                 return BadRequest("GreenCoffeeCreation object is null");
 
-            var createdCoffee = _service.GreenCoffeeService.CreateGreenCoffee(coffee);
+            if (!ModelState.IsValid)
+                return UnprocessableEntity(ModelState); 
+
+            var createdCoffee = await _service.GreenCoffeeService.CreateGreenCoffeeAsync(coffee);
             return CreatedAtAction(nameof(GetCoffee), new {id = createdCoffee.Id}, createdCoffee);
         }
 
         [HttpPut("{id:int}")]
-        public IActionResult UpdateCoffee(int id, [FromBody] GreenCoffeeUpdateDto coffee)
+        public async Task<IActionResult> UpdateCoffee(int id, [FromBody] GreenCoffeeUpdateDto coffee)
         {
             if (coffee is null)
                 return BadRequest("GreenCoffeeUpdate object is null");
 
-            _service.GreenCoffeeService.UpdateGreenCoffee(id, coffee, true);
+            await _service.GreenCoffeeService.UpdateGreenCoffeeAsync(id, coffee, true);
             return NoContent();
         }
 
         [HttpDelete("{id:int}")]
-        public IActionResult DeleteCoffee(int id)
+        public async Task<IActionResult> DeleteCoffee(int id)
         {
-            _service.GreenCoffeeService.DeleteGreenCoffee(id, false);
+            await _service.GreenCoffeeService.DeleteGreenCoffeeAsync(id, false);
             return NoContent();
         }
     }

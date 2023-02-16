@@ -5,6 +5,9 @@ namespace RoastedCoffeeAccountingSystem.Models
     public class GreenCoffee
     {
         public int Id { get; set; }
+
+        [Required]
+        [MaxLength(20)]
         public string Variety { get; set; } = null!;
 
         [MaxLength(60)]
@@ -12,6 +15,8 @@ namespace RoastedCoffeeAccountingSystem.Models
 
         [MaxLength(60)]
         public string? Region { get; set; }
+
+        [Range(0, 1000)]
         public double Weight { get; set; }
         public ICollection<Roasting>? Roastings { get; set; }
     }

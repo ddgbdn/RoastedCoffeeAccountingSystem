@@ -5,6 +5,6 @@
         IGreenCoffeeRepository GreenCoffee { get; }
         IRoastingsRepository Roastings { get; }
 
-        void Save();
+        Task SaveAsync();
     }
 }

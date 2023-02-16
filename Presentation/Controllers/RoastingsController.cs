@@ -16,43 +16,46 @@ namespace RoastedCoffeeAccountingSystem.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetRoastings()
+        public async Task<IActionResult> GetRoastings()
         {
-            var roastings = _service.RoastingsService.GetRoastings(false);
+            var roastings = await _service.RoastingsService.GetRoastingsAsync(false);
             return Ok(roastings);
         }
 
         [HttpGet("{id:int}")]
-        public IActionResult GetRoasting(int id)
+        public async Task<IActionResult> GetRoasting(int id)
         {
-            var roasting = _service.RoastingsService.GetRoasting(id, false);
+            var roasting = await _service.RoastingsService.GetRoastingAsync(id, false);
             return Ok(roasting);
         }
 
         [HttpPost]
-        public IActionResult CreateRoasting([FromBody] RoastingCreationDto roasting)
+        public async Task<IActionResult> CreateRoasting([FromBody] RoastingCreationDto roasting)
         {
             if (roasting is null)
                 return BadRequest("RoastingCreation object is null");
 
-            var roastingEntity = _service.RoastingsService.CreateRoasting(roasting);
+            if (!ModelState.IsValid)
+                return UnprocessableEntity(ModelState);
+
+            var roastingEntity = await _service.RoastingsService.CreateRoastingAsync(roasting);
             return CreatedAtAction(nameof(GetRoasting), new { id = roastingEntity.Id }, roastingEntity);
         }
 
         [HttpPut("{id:int}")]
-        public IActionResult UpdateRoasting(int id, [FromBody] RoastingUpdateDto roasting)
+        public async Task<IActionResult> UpdateRoasting(int id, [FromBody] RoastingUpdateDto roasting)
         {
             if (roasting is null)
                 return BadRequest("RoastingUpdate object is null");
 
-            _service.RoastingsService.UpdateRoasting(id, roasting, true);
+            await _service.RoastingsService.UpdateRoastingAsync(id, roasting, true);
             return NoContent();
         }
 
         [HttpDelete("{id:int}")]
-        public IActionResult DeleteRoasting(int id)
+        public async Task<IActionResult>DeleteRoasting(int id)
         {
-            _service.RoastingsService.DeleteRoasting(id, false);
+            await _service.RoastingsService.DeleteRoastingAsync(id, false);
             return NoContent();
         }
     }
