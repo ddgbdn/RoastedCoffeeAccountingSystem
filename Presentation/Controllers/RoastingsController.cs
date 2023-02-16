@@ -32,11 +32,21 @@ namespace RoastedCoffeeAccountingSystem.Controllers
         [HttpPost]
         public IActionResult CreateRoasting([FromBody] RoastingCreationDto roasting)
         {
-            if (roasting == null)
+            if (roasting is null)
                 return BadRequest("RoastingCreation object is null");
 
             var roastingEntity = _service.RoastingsService.CreateRoasting(roasting);
             return CreatedAtAction(nameof(GetRoasting), new { id = roastingEntity.Id }, roastingEntity);
+        }
+
+        [HttpPut("{id:int}")]
+        public IActionResult UpdateRoasting(int id, [FromBody] RoastingUpdateDto roasting)
+        {
+            if (roasting is null)
+                return BadRequest("RoastingUpdate object is null");
+
+            _service.RoastingsService.UpdateRoasting(id, roasting, true);
+            return NoContent();
         }
 
         [HttpDelete("{id:int}")]

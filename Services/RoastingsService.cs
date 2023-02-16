@@ -55,5 +55,15 @@ namespace Services
             _repository.Roastings.DeleteRoasting(roasting);
             _repository.Save();
         }
+
+        public void UpdateRoasting(int id, RoastingUpdateDto roasting, bool trackChanges)
+        {
+            var roastingEntity = _repository.Roastings.GetRoasting(id, trackChanges);
+            if (roastingEntity is null)
+                throw new RoastingNotFoundException(id);
+
+            _mapper.Map(roasting, roastingEntity);
+            _repository.Save();
+        }
     }
 }

@@ -36,6 +36,16 @@ namespace RoastedCoffeeAccountingSystem.Controllers
             return CreatedAtAction(nameof(GetCoffee), new {id = createdCoffee.Id}, createdCoffee);
         }
 
+        [HttpPut("{id:int}")]
+        public IActionResult UpdateCoffee(int id, [FromBody] GreenCoffeeUpdateDto coffee)
+        {
+            if (coffee is null)
+                return BadRequest("GreenCoffeeUpdate object is null");
+
+            _service.GreenCoffeeService.UpdateGreenCoffee(id, coffee, true);
+            return NoContent();
+        }
+
         [HttpDelete("{id:int}")]
         public IActionResult DeleteCoffee(int id)
         {

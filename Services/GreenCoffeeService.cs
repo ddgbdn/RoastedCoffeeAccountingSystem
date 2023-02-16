@@ -56,5 +56,15 @@ namespace Services
             _repository.GreenCoffee.DeleteGreenCoffee(coffee);
             _repository.Save();
         }
+
+        public void UpdateGreenCoffee(int id, GreenCoffeeUpdateDto greenCoffee, bool trackChanges)
+        {
+            var coffeeEntity = _repository.GreenCoffee.GetGreenCoffee(id, trackChanges);
+            if (greenCoffee is null)
+                throw new GreenCoffeeNotFoundException(id);
+
+            _mapper.Map(greenCoffee, coffeeEntity); // Modification is done here. 
+            _repository.Save();
+        }
     }
 }
