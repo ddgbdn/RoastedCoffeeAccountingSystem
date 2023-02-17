@@ -1,6 +1,7 @@
 ﻿using Contracts;
 using Microsoft.EntityFrameworkCore;
 using RoastedCoffeeAccountingSystem.Models;
+using Shared.RequestFeatures;
 
 namespace Repository
 {
@@ -10,9 +11,11 @@ namespace Repository
         {
         }
 
-        public async Task<IEnumerable<Roasting>> GetRoastingsAsync(bool trackChanges)
+        public async Task<IEnumerable<Roasting>> GetRoastingsAsync(RoastingsParameters parameters, bool trackChanges)
             => await FindAll(trackChanges)
                 .OrderByDescending(r => r.Id)
+                .Skip((parameters.PageNumber - 1) * parameters.PageSize)  // Add computing base
+                .Take(parameters.PageSize)
                 .Include(c => c.Coffee)
                 .ToListAsync();
 

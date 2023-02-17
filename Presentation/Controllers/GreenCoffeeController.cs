@@ -2,6 +2,7 @@
 using Presentation.ActionFilters;
 using ServiceContracts;
 using Shared.DataTransferObjects;
+using Shared.RequestFeatures;
 
 namespace RoastedCoffeeAccountingSystem.Controllers
 {

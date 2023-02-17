@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc.Filters;
 using Presentation.ActionFilters;
 using ServiceContracts;
 using Shared.DataTransferObjects;
+using Shared.RequestFeatures;
 
 namespace RoastedCoffeeAccountingSystem.Controllers
 {
@@ -18,9 +19,9 @@ namespace RoastedCoffeeAccountingSystem.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetRoastings()
+        public async Task<IActionResult> GetRoastings([FromQuery] RoastingsParameters parameters)
         {
-            var roastings = await _service.RoastingsService.GetRoastingsAsync(false);
+            var roastings = await _service.RoastingsService.GetRoastingsAsync(parameters, false);
             return Ok(roastings);
         }
 

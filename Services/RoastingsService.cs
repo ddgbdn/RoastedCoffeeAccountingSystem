@@ -4,6 +4,7 @@ using Entities.Exceptions;
 using RoastedCoffeeAccountingSystem.Models;
 using ServiceContracts;
 using Shared.DataTransferObjects;
+using Shared.RequestFeatures;
 
 namespace Services
 {
@@ -21,9 +22,9 @@ namespace Services
         }
 
 
-        public async Task<IEnumerable<RoastingDto>> GetRoastingsAsync(bool trackChanges)
+        public async Task<IEnumerable<RoastingDto>> GetRoastingsAsync(RoastingsParameters parameters, bool trackChanges)
         {
-            var roastings = await _repository.Roastings.GetRoastingsAsync(trackChanges);
+            var roastings = await _repository.Roastings.GetRoastingsAsync(parameters, trackChanges);
             
             return _mapper.Map<IEnumerable<RoastingDto>>(roastings);
         }
