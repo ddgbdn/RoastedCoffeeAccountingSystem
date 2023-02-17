@@ -23,18 +23,16 @@ namespace Services
 
         public async Task<IEnumerable<GreenCoffeeDto>> GetAllGreenCoffeeAsync(bool trackChanges)
         {
-                var coffee = await _repository.GreenCoffee.GetAllGreenCoffeeAsync(trackChanges);
+            var coffee = await _repository.GreenCoffee.GetAllGreenCoffeeAsync(trackChanges);
 
-                return _mapper.Map<IEnumerable<GreenCoffeeDto>>(coffee);     
+            return _mapper.Map<IEnumerable<GreenCoffeeDto>>(coffee);     
         }
 
         public async Task<GreenCoffeeDto> GetGreenCoffeeAsync(int id, bool trackChanges)
         {
-            var coffee = await _repository.GreenCoffee.GetGreenCoffeeAsync(id, trackChanges);
-            if (coffee is null)
-                throw new GreenCoffeeNotFoundException(id);
+            var coffeeEntity = await GetCoffeeWithNullCheck(id, trackChanges);
 
-            return _mapper.Map<GreenCoffeeDto>(coffee);
+            return _mapper.Map<GreenCoffeeDto>(coffeeEntity);
         }
 
         public async Task<GreenCoffeeDto> CreateGreenCoffeeAsync(GreenCoffeeCreationDto greenCoffee)
@@ -49,22 +47,27 @@ namespace Services
 
         public async Task DeleteGreenCoffeeAsync(int id, bool trackChanges)
         {
-            var coffee = await _repository.GreenCoffee.GetGreenCoffeeAsync(id, trackChanges);
-            if (coffee is null)
-                throw new GreenCoffeeNotFoundException(id);
+            var coffeeEntity = await GetCoffeeWithNullCheck(id, trackChanges);
 
-            _repository.GreenCoffee.DeleteGreenCoffee(coffee);
+            _repository.GreenCoffee.DeleteGreenCoffee(coffeeEntity);
             await _repository.SaveAsync();
         }
 
         public async Task UpdateGreenCoffeeAsync(int id, GreenCoffeeUpdateDto greenCoffee, bool trackChanges)
         {
-            var coffeeEntity = await _repository.GreenCoffee.GetGreenCoffeeAsync(id, trackChanges);
-            if (greenCoffee is null)
-                throw new GreenCoffeeNotFoundException(id);
+            var coffeeEntity = await GetCoffeeWithNullCheck(id, trackChanges);
 
             _mapper.Map(greenCoffee, coffeeEntity); // Modification is done here. 
             await _repository.SaveAsync();
+        }
+
+        private async Task<GreenCoffee> GetCoffeeWithNullCheck(int id, bool trackChanges)
+        {
+            var coffee = await _repository.GreenCoffee.GetGreenCoffeeAsync(id, trackChanges);
+            if (coffee is null)
+                throw new GreenCoffeeNotFoundException(id);
+
+            return coffee;
         }
     }
 }

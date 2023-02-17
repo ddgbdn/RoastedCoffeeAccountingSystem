@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Presentation.ActionFilters;
 using ServiceContracts;
 using Shared.DataTransferObjects;
 
@@ -27,24 +28,18 @@ namespace RoastedCoffeeAccountingSystem.Controllers
         }
 
         [HttpPost]
+        [ServiceFilter(typeof(ValidationFilterAttribute))]
         public async Task<IActionResult> CreateCoffee([FromBody] GreenCoffeeCreationDto coffee)
         {
-            if (coffee is null)
-                return BadRequest("GreenCoffeeCreation object is null");
-
-            if (!ModelState.IsValid)
-                return UnprocessableEntity(ModelState); 
-
             var createdCoffee = await _service.GreenCoffeeService.CreateGreenCoffeeAsync(coffee);
+
             return CreatedAtAction(nameof(GetCoffee), new {id = createdCoffee.Id}, createdCoffee);
         }
 
         [HttpPut("{id:int}")]
+        [ServiceFilter(typeof(ValidationFilterAttribute))]
         public async Task<IActionResult> UpdateCoffee(int id, [FromBody] GreenCoffeeUpdateDto coffee)
         {
-            if (coffee is null)
-                return BadRequest("GreenCoffeeUpdate object is null");
-
             await _service.GreenCoffeeService.UpdateGreenCoffeeAsync(id, coffee, true);
             return NoContent();
         }

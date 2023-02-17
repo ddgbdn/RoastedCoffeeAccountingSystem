@@ -29,12 +29,11 @@ namespace Services
         }
         public async Task<RoastingDto> GetRoastingAsync(int id, bool trackChanges)
         {
-            var roasting = await _repository.Roastings.GetRoastingAsync(id, trackChanges);
-            if (roasting is null)
-                throw new RoastingNotFoundException(id);
+            var roastingEntity = await GetRoastingWithNullCheck(id, trackChanges);
 
-            return _mapper.Map<RoastingDto>(roasting);
+            return _mapper.Map<RoastingDto>(roastingEntity);
         }
+
 
         public async Task<RoastingDto> CreateRoastingAsync(RoastingCreationDto roasting)
         {
@@ -48,22 +47,26 @@ namespace Services
 
         public async Task DeleteRoastingAsync(int id, bool trackChanges)
         {
-            var roasting = await _repository.Roastings.GetRoastingAsync(id, trackChanges);
-            if (roasting is null)
-                throw new RoastingNotFoundException(id);
+            var roastingEntity = await GetRoastingWithNullCheck(id, trackChanges);
 
-            _repository.Roastings.DeleteRoasting(roasting);
+            _repository.Roastings.DeleteRoasting(roastingEntity);
             await _repository.SaveAsync();
         }
 
         public async Task UpdateRoastingAsync(int id, RoastingUpdateDto roasting, bool trackChanges)
         {
-            var roastingEntity = await _repository.Roastings.GetRoastingAsync(id, trackChanges);
-            if (roastingEntity is null)
-                throw new RoastingNotFoundException(id);
+            var roastingEntity = await GetRoastingWithNullCheck(id, trackChanges);
 
             _mapper.Map(roasting, roastingEntity);
             await _repository.SaveAsync();
+        }
+        private async Task<Roasting> GetRoastingWithNullCheck(int id, bool trackChanges)
+        {
+            var roasting = await _repository.Roastings.GetRoastingAsync(id, trackChanges);
+            if (roasting is null)
+                throw new RoastingNotFoundException(id);
+
+            return roasting;
         }
     }
 }
