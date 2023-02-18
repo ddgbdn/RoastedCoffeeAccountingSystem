@@ -4,6 +4,7 @@ using Presentation.ActionFilters;
 using ServiceContracts;
 using Shared.DataTransferObjects;
 using Shared.RequestFeatures;
+using System.Text.Json;
 
 namespace RoastedCoffeeAccountingSystem.Controllers
 {
@@ -21,8 +22,10 @@ namespace RoastedCoffeeAccountingSystem.Controllers
         [HttpGet]
         public async Task<IActionResult> GetRoastings([FromQuery] RoastingsParameters parameters)
         {
-            var roastings = await _service.RoastingsService.GetRoastingsAsync(parameters, false);
-            return Ok(roastings);
+            var pagedRoastings = await _service.RoastingsService.GetRoastingsAsync(parameters, false);
+            Response.Headers.Add("X-Pagination", JsonSerializer.Serialize(pagedRoastings.metaData));
+
+            return Ok(pagedRoastings.roastings);
         }
 
         [HttpGet("{id:int}")]

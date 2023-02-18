@@ -22,11 +22,12 @@ namespace Services
         }
 
 
-        public async Task<IEnumerable<RoastingDto>> GetRoastingsAsync(RoastingsParameters parameters, bool trackChanges)
+        public async Task<(IEnumerable<RoastingDto> roastings, MetaData metaData)> GetRoastingsAsync(RoastingsParameters parameters, bool trackChanges)
         {
-            var roastings = await _repository.Roastings.GetRoastingsAsync(parameters, trackChanges);
-            
-            return _mapper.Map<IEnumerable<RoastingDto>>(roastings);
+            var roastingsWithMetaData = await _repository.Roastings.GetRoastingsAsync(parameters, trackChanges);
+            var roastingsDto = _mapper.Map<IEnumerable<RoastingDto>>(roastingsWithMetaData);
+
+            return (roastingsDto, roastingsWithMetaData.MetaData);
         }
         public async Task<RoastingDto> GetRoastingAsync(int id, bool trackChanges)
         {

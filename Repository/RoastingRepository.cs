@@ -11,13 +11,15 @@ namespace Repository
         {
         }
 
-        public async Task<IEnumerable<Roasting>> GetRoastingsAsync(RoastingsParameters parameters, bool trackChanges)
-            => await FindAll(trackChanges)
+        public async Task<PagedList<Roasting>> GetRoastingsAsync(RoastingsParameters parameters, bool trackChanges)
+        {
+            var roastings = await FindAll(trackChanges)
                 .OrderByDescending(r => r.Id)
-                .Skip((parameters.PageNumber - 1) * parameters.PageSize)  // Add computing base
-                .Take(parameters.PageSize)
                 .Include(c => c.Coffee)
                 .ToListAsync();
+
+            return PagedList<Roasting>.ToPagedList(roastings, parameters.PageNumber, parameters.PageSize);
+        }
 
         public async Task<Roasting>GetRoastingAsync(int id, bool trackChanges)
             => await FindByCondition(r => r.Id == id, trackChanges)
