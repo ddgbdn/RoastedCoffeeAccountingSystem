@@ -9,8 +9,8 @@ namespace Shared.RequestFeatures
     public class RoastingsParameters : RequestParameters
     {
         public DateTime StartDate { get; set; }
-        public DateTime EndDate { get; set; } = DateTime.Now;
+        public DateTime EndDate { get; set; } = DateTime.Today;
 
-        public bool ValidDataRange => EndDate > StartDate;
+        public bool IsValidDataRange => EndDate > StartDate;
     }
 }

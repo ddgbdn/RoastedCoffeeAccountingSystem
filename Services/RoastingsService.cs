@@ -24,6 +24,9 @@ namespace Services
 
         public async Task<(IEnumerable<RoastingDto> roastings, MetaData metaData)> GetRoastingsAsync(RoastingsParameters parameters, bool trackChanges)
         {
+            if (!parameters.IsValidDataRange)
+                throw new DateRangeBadRequestException();
+
             var roastingsWithMetaData = await _repository.Roastings.GetRoastingsAsync(parameters, trackChanges);
             var roastingsDto = _mapper.Map<IEnumerable<RoastingDto>>(roastingsWithMetaData);
 

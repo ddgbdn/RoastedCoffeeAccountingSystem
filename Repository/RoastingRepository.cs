@@ -13,7 +13,9 @@ namespace Repository
 
         public async Task<PagedList<Roasting>> GetRoastingsAsync(RoastingsParameters parameters, bool trackChanges)
         {
-            var roastings = await FindAll(trackChanges)
+            var roastings = await FindByCondition(
+                    r => r.Date >= parameters.StartDate 
+                    && r.Date <= parameters.EndDate, trackChanges)
                 .OrderByDescending(r => r.Id)
                 .Include(c => c.Coffee)
                 .ToListAsync();
@@ -21,11 +23,11 @@ namespace Repository
             return PagedList<Roasting>.ToPagedList(roastings, parameters.PageNumber, parameters.PageSize);
         }
 
-        public async Task<Roasting>GetRoastingAsync(int id, bool trackChanges)
+        public async Task<Roasting> GetRoastingAsync(int id, bool trackChanges)
             => await FindByCondition(r => r.Id == id, trackChanges)
                 .OrderByDescending(r => r.Id)
                 .Include(c => c.Coffee)
-                .SingleOrDefaultAsync();
+                .SingleOrDefaultAsync()!;
 
         public void CreateRoasting(Roasting roasting)
         {

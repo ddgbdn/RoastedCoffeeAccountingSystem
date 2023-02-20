@@ -23,7 +23,7 @@ namespace RoastedCoffeeAccountingSystem.Controllers
         public async Task<IActionResult> GetRoastings([FromQuery] RoastingsParameters parameters)
         {
             var pagedRoastings = await _service.RoastingsService.GetRoastingsAsync(parameters, false);
-            Response.Headers.Add("X-Pagination", JsonSerializer.Serialize(pagedRoastings.metaData));
+            Response.Headers.Add("X-Pagination", JsonSerializer.Serialize(pagedRoastings.metaData)); // Modify CORS?
 
             return Ok(pagedRoastings.roastings);
         }
