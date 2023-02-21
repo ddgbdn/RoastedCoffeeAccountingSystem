@@ -17,5 +17,7 @@ namespace Shared.RequestFeatures
             get => _pageSize;
             set => _pageSize = Math.Min(value, maxPageSize);
         }
+
+        public string? Fields { get; set; }
     }
 }

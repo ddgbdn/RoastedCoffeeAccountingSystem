@@ -1,5 +1,7 @@
 ﻿using Contracts;
 using LoggerService;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.EntityFrameworkCore;
 using Repository;
 using ServiceContracts;
@@ -21,5 +23,17 @@ namespace RoastedCoffeeAccountingSystem.Extensions
         public static void ConfigureSQLContext(this IServiceCollection services, IConfiguration configuration)
             => services.AddDbContext<RepositoryContext>(options
                 => options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
+
+        public static void AddCustomMediaType(this IServiceCollection services)
+        {
+            services.Configure<MvcOptions>(cfg =>
+            {
+                var jsonOutputFormatter = cfg.OutputFormatters
+                .OfType<SystemTextJsonOutputFormatter>()?.FirstOrDefault();
+
+                if (jsonOutputFormatter is not null)
+                    jsonOutputFormatter.SupportedMediaTypes.Add("application/hateoas+json");
+            });
+        }
     }
 }
