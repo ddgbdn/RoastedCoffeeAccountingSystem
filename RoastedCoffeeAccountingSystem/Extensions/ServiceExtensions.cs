@@ -24,16 +24,5 @@ namespace RoastedCoffeeAccountingSystem.Extensions
             => services.AddDbContext<RepositoryContext>(options
                 => options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
 
-        public static void AddCustomMediaType(this IServiceCollection services)
-        {
-            services.Configure<MvcOptions>(cfg =>
-            {
-                var jsonOutputFormatter = cfg.OutputFormatters
-                .OfType<SystemTextJsonOutputFormatter>()?.FirstOrDefault();
-
-                if (jsonOutputFormatter is not null)
-                    jsonOutputFormatter.SupportedMediaTypes.Add("application/hateoas+json");
-            });
-        }
     }
 }

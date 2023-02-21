@@ -24,7 +24,6 @@ builder.Services.Configure<ApiBehaviorOptions>(opt =>
 });
 builder.Services.AddScoped<ValidationFilterAttribute>();
 builder.Services.AddControllers().AddApplicationPart(typeof(Presentation.AssemblyReference).Assembly);
-builder.Services.AddCustomMediaType();
 
 //Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 //builder.Services.AddEndpointsApiExplorer();

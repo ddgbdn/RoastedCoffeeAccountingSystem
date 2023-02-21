@@ -7,16 +7,18 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="DataShaping\**" />
+    <EmbeddedResource Remove="DataShaping\**" />
+    <None Remove="DataShaping\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="AutoMapper" Version="12.0.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Contracts\Contracts.csproj" />
     <ProjectReference Include="..\ServiceContracts\ServiceContracts.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="DataShaping\" />
   </ItemGroup>
 
 </Project>
