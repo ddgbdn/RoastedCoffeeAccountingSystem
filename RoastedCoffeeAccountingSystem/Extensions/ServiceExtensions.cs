@@ -1,8 +1,11 @@
 ﻿using Contracts;
+using Entities.Models;
 using LoggerService;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Internal;
 using Repository;
 using ServiceContracts;
 using Services;
@@ -24,5 +27,17 @@ namespace RoastedCoffeeAccountingSystem.Extensions
             => services.AddDbContext<RepositoryContext>(options
                 => options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
 
+        public static void ConfigureIdentity(this IServiceCollection services)
+        {
+            var builder = services.AddIdentity<User, IdentityRole>(options =>
+            {
+                options.Password.RequireDigit = true;
+                options.Password.RequireLowercase = true;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequiredLength = 10;
+            })
+            .AddEntityFrameworkStores<RepositoryContext>()
+            .AddDefaultTokenProviders();
+        }
     }
 }

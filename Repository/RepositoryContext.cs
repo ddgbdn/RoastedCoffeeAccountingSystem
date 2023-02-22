@@ -1,8 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Entities.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Repository.Configuration;
 using RoastedCoffeeAccountingSystem.Models;
+using System.Security.Principal;
 
-public class RepositoryContext : DbContext
+public class RepositoryContext : IdentityDbContext<User>
 {
     public RepositoryContext(DbContextOptions options)
     : base(options)
@@ -41,7 +44,10 @@ public class RepositoryContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        base.OnModelCreating(modelBuilder);
+
         modelBuilder.ApplyConfiguration(new GreenCoffeeConfiguration());
         modelBuilder.ApplyConfiguration(new RoastingConfiguration());
+        modelBuilder.ApplyConfiguration(new RoleConfiguration());
     }
 }

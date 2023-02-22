@@ -29,6 +29,9 @@ builder.Services.AddControllers().AddApplicationPart(typeof(Presentation.Assembl
 //builder.Services.AddEndpointsApiExplorer();
 //builder.Services.AddSwaggerGen();
 
+builder.Services.AddAuthentication();
+builder.Services.ConfigureIdentity();
+
 var app = builder.Build();
 
 app.ConfigureExceptionHandler(app.Services.GetRequiredService<ILoggerManager>());
@@ -48,6 +51,7 @@ app.UseStaticFiles();
 
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace RoastedCoffeeAccountingSystem.Migrations
 {
     [DbContext(typeof(RepositoryContext))]
-    partial class RepositoryContextModelSnapshot : ModelSnapshot
+    [Migration("20230222122247_CreateIdentityTable")]
+    partial class CreateIdentityTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -119,29 +122,6 @@ namespace RoastedCoffeeAccountingSystem.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "deb13067-ec9e-47a5-9bb0-571aac71fe23",
-                            ConcurrencyStamp = "32413c53-d9d2-45f6-9a10-6fa232fa9736",
-                            Name = "Administrator",
-                            NormalizedName = "ADMINISTRATOR"
-                        },
-                        new
-                        {
-                            Id = "0864fa8e-2eb8-4501-9d29-8a3fa9eb22db",
-                            ConcurrencyStamp = "b67426ef-912b-4d5d-8574-3dfde3103089",
-                            Name = "Manager",
-                            NormalizedName = "MANAGER"
-                        },
-                        new
-                        {
-                            Id = "6e57b4fb-befe-41b3-b0bb-f0bdf2269ee1",
-                            ConcurrencyStamp = "8ea4e933-6391-452d-bae7-7f74e19cdffc",
-                            Name = "Viewer",
-                            NormalizedName = "VIEWER"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -333,14 +313,14 @@ namespace RoastedCoffeeAccountingSystem.Migrations
                             Id = 1,
                             Amount = 8.1199999999999992,
                             CoffeeId = 1,
-                            Date = new DateTime(2023, 2, 22, 20, 35, 15, 56, DateTimeKind.Local).AddTicks(6688)
+                            Date = new DateTime(2023, 2, 22, 18, 22, 47, 214, DateTimeKind.Local).AddTicks(4924)
                         },
                         new
                         {
                             Id = 2,
                             Amount = 4.0199999999999996,
                             CoffeeId = 2,
-                            Date = new DateTime(2023, 2, 22, 20, 35, 15, 56, DateTimeKind.Local).AddTicks(6701)
+                            Date = new DateTime(2023, 2, 22, 18, 22, 47, 214, DateTimeKind.Local).AddTicks(4936)
                         });
                 });
 
