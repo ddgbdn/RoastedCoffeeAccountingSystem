@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Entities.Models;
 using RoastedCoffeeAccountingSystem.Models;
 using Shared.DataTransferObjects;
 
@@ -21,6 +22,8 @@ namespace RoastedCoffeeAccountingSystem.Mapper
 
             CreateMap<RoastingCreationDto, Roasting>();
             CreateMap<RoastingUpdateDto, Roasting>();
+
+            CreateMap<UserRegistrationDto, User>();
         }
     }
 }
