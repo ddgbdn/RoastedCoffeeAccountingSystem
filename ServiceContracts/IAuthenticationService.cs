@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using Shared.DataTransferObjects;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,5 +11,7 @@ namespace ServiceContracts
     public interface IAuthenticationService
     {
         Task<IdentityResult> RegisterUser(UserRegistrationDto userRegistrationDto);
+        Task<bool> ValidateUser(UserAuthenticationDto userAuthenticationDto);
+        Task<string> CreateToken();
     }
 }

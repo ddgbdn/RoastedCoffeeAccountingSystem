@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Presentation.ActionFilters;
 using ServiceContracts;
 using Shared.DataTransferObjects;
@@ -15,6 +16,7 @@ namespace RoastedCoffeeAccountingSystem.Controllers
         public GreenCoffeeController(IServiceManager service) => _service = service;
 
         [HttpGet]
+        [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> GetAllCoffee()
         {
             var coffee = await _service.GreenCoffeeService.GetAllGreenCoffeeAsync(false);

@@ -1,14 +1,17 @@
 ﻿using Contracts;
 using Entities.Models;
 using LoggerService;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Internal;
+using Microsoft.IdentityModel.Tokens;
 using Repository;
 using ServiceContracts;
 using Services;
+using System.Text;
 
 namespace RoastedCoffeeAccountingSystem.Extensions
 {
@@ -38,6 +41,31 @@ namespace RoastedCoffeeAccountingSystem.Extensions
             })
             .AddEntityFrameworkStores<RepositoryContext>()
             .AddDefaultTokenProviders();
+        }
+
+        public static void ConfigureJWT(this IServiceCollection services, IConfiguration configuration)
+        {
+            var jwtSettings = configuration.GetSection("JwtSettings");
+            var secret = Environment.GetEnvironmentVariable("RoastingSystemSecret");
+
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+            .AddJwtBearer(options =>
+            {
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidateLifetime = true,
+                    ValidateIssuerSigningKey = true,
+                    ValidIssuer = jwtSettings["validIssuer"],
+                    ValidAudience = jwtSettings["validAudience"],
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secret))
+                };
+            });
         }
     }
 }

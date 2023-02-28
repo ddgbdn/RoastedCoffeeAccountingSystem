@@ -4,5 +4,6 @@
     {
         IGreenCoffeeService GreenCoffeeService { get; }
         IRoastingsService RoastingsService { get; }
+        IAuthenticationService AuthenticationService { get; }
     }
 }
