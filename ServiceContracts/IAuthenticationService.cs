@@ -12,6 +12,6 @@ namespace ServiceContracts
     {
         Task<IdentityResult> RegisterUser(UserRegistrationDto userRegistrationDto);
         Task<bool> ValidateUser(UserAuthenticationDto userAuthenticationDto);
-        Task<string> CreateToken();
+        Task<TokenDto> CreateToken(bool populateExp);
     }
 }

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace RoastedCoffeeAccountingSystem.Migrations
 {
     [DbContext(typeof(RepositoryContext))]
-    partial class RepositoryContextModelSnapshot : ModelSnapshot
+    [Migration("20230228131134_AddUserRefreshTokenFields")]
+    partial class AddUserRefreshTokenFields
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -127,21 +130,21 @@ namespace RoastedCoffeeAccountingSystem.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "deb13067-ec9e-47a5-9bb0-571aac71fe23",
+                            Id = "579ad170-0aa2-4261-b60c-e800ab334884",
                             ConcurrencyStamp = "a103f5ac-b9b4-4d9a-a862-e3977cf34152",
                             Name = "Administrator",
                             NormalizedName = "ADMINISTRATOR"
                         },
                         new
                         {
-                            Id = "0864fa8e-2eb8-4501-9d29-8a3fa9eb22db",
+                            Id = "6abadbea-b26f-4f09-970b-ba8ec614f9b4",
                             ConcurrencyStamp = "0185c9da-2c16-428b-a0c7-599a6ba06c17",
                             Name = "Manager",
                             NormalizedName = "MANAGER"
                         },
                         new
                         {
-                            Id = "6e57b4fb-befe-41b3-b0bb-f0bdf2269ee1",
+                            Id = "a0d1d11e-a074-466f-9f77-5e429271fcfb",
                             ConcurrencyStamp = "9b5b23cf-411f-46d6-b274-24f13c76f4a2",
                             Name = "Viewer",
                             NormalizedName = "VIEWER"

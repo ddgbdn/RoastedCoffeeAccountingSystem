@@ -14,6 +14,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.CodeDom.Compiler;
+using System.Security.Cryptography;
 
 namespace Service
 {
@@ -99,6 +100,39 @@ namespace Service
                 claims.Add(new Claim(ClaimTypes.Role, role));
 
             return claims;
+        }
+
+        private string GenerateRefreshToken()
+        {
+            var randomNumber = new byte[32];
+            using (var rng = RandomNumberGenerator.Create())
+            {
+                rng.GetBytes(randomNumber);
+                return Convert.ToBase64String(randomNumber);
+            }
+        }
+
+        private ClaimsPrincipal GetPrincipalsFromExpiredToken(string token)
+        {
+            var jwtSettings = _configuration.GetSection("JwtSettings");
+
+            var TokenValidationParameters = new TokenValidationParameters
+            {
+                ValidateAudience = true,
+                ValidAudience = jwtSettings["validAudience"],
+                ValidateIssuer = true,
+                ValidIssuer = jwtSettings["validIssuer"],
+                ValidateIssuerSigningKey = true,
+                IssuerSigningKey = new SymmetricSecurityKey(
+                    Encoding.UTF8.GetBytes(Environment.GetEnvironmentVariable("RoastingSystemSecret")!)),
+                ValidateLifetime = true
+            };
+
+            var tokenHandler = new JwtSecurityTokenHandler;
+            var principal = tokenHandler.ValidateToken(token, TokenValidationParameters, out var securityToken);
+
+            var jwtSecurityToken = securityToken as JwtSecurityToken;
+            if (jwtSecurityToken == null || )
         }
     }
 }
