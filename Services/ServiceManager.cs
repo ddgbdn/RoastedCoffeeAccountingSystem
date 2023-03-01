@@ -1,8 +1,10 @@
 ﻿using AutoMapper;
 using Contracts;
+using Entities.ConfigurationModels;
 using Entities.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
 using Service;
 using ServiceContracts;
 
@@ -18,7 +20,7 @@ namespace Services
             ILoggerManager logger, 
             IMapper mapper, 
             UserManager<User> userManager, 
-            IConfiguration configuration)
+            IOptions<JwtConfiguration> configuration)
         {
             _greenCoffeeService = new Lazy<IGreenCoffeeService>(()
                 => new GreenCoffeeService(repositoryManager, logger, mapper));
