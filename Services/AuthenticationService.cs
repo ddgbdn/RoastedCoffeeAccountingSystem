@@ -15,6 +15,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.CodeDom.Compiler;
 using System.Security.Cryptography;
+using Entities.Exceptions;
 
 namespace Service
 {
@@ -35,10 +36,37 @@ namespace Service
             _userManager = userManager;
         }
 
-        public async Task<string> CreateToken()
+        public async Task<TokenDto> CreateToken(bool populateExp)
         {
             var tokenOptions = GenerateTokenOptions(GetSigningCredentials(), await GetClaims());
-            return new JwtSecurityTokenHandler().WriteToken(tokenOptions);
+
+            var refreshToken = GenerateRefreshToken();
+
+            _user.RefreshToken = refreshToken;
+
+            if (populateExp)
+                _user.RefreshTokenExpiryTime = DateTime.Now.AddDays(7);
+
+            await _userManager.UpdateAsync(_user);
+
+            var accessToken = new JwtSecurityTokenHandler().WriteToken(tokenOptions);
+
+            return new TokenDto(accessToken, refreshToken);
+        }
+
+        public async Task<TokenDto> RefreshToken(TokenDto tokenDto)
+        {
+            var principal = GetPrincipalsFromExpiredToken(tokenDto.AccessToken);
+
+            var user = await _userManager.FindByNameAsync(principal.Identity.Name);
+            if (user == null
+                || user.RefreshToken != tokenDto.RefreshToken
+                || user.RefreshTokenExpiryTime <= DateTime.Now)
+                throw new RefreshTokenBadRequest();
+
+            _user = user;
+
+            return await CreateToken(false);
         }
 
         public async Task<IdentityResult> RegisterUser(UserRegistrationDto userRegistrationDto)
@@ -128,11 +156,15 @@ namespace Service
                 ValidateLifetime = true
             };
 
-            var tokenHandler = new JwtSecurityTokenHandler;
+            var tokenHandler = new JwtSecurityTokenHandler();
             var principal = tokenHandler.ValidateToken(token, TokenValidationParameters, out var securityToken);
 
             var jwtSecurityToken = securityToken as JwtSecurityToken;
-            if (jwtSecurityToken == null || )
+            if (jwtSecurityToken == null
+                || !jwtSecurityToken.Header.Alg.Equals(SecurityAlgorithms.HmacSha256, StringComparison.InvariantCultureIgnoreCase))
+                throw new SecurityTokenException("Invalid token");
+
+            return principal;
         }
     }
 }
