@@ -16,7 +16,7 @@ namespace RoastedCoffeeAccountingSystem.Controllers
         public GreenCoffeeController(IServiceManager service) => _service = service;
 
         [HttpGet]
-        [Authorize(Roles = "Administrator")]
+        [Authorize(Roles = "Viewer")]
         public async Task<IActionResult> GetAllCoffee()
         {
             var coffee = await _service.GreenCoffeeService.GetAllGreenCoffeeAsync(false);
@@ -24,6 +24,7 @@ namespace RoastedCoffeeAccountingSystem.Controllers
         }
 
         [HttpGet("{id:int}")]
+        [Authorize(Roles = "Viewer")]
         public async Task<IActionResult> GetCoffee(int id)
         {
             var coffee = await _service.GreenCoffeeService.GetGreenCoffeeAsync(id, false);
@@ -32,6 +33,7 @@ namespace RoastedCoffeeAccountingSystem.Controllers
 
         [HttpPost]
         [ServiceFilter(typeof(ValidationFilterAttribute))]
+        [Authorize(Roles = "Administrator, Manager")]
         public async Task<IActionResult> CreateCoffee([FromBody] GreenCoffeeCreationDto coffee)
         {
             var createdCoffee = await _service.GreenCoffeeService.CreateGreenCoffeeAsync(coffee);
@@ -41,6 +43,7 @@ namespace RoastedCoffeeAccountingSystem.Controllers
 
         [HttpPut("{id:int}")]
         [ServiceFilter(typeof(ValidationFilterAttribute))]
+        [Authorize(Roles = "Administrator, Manager")]
         public async Task<IActionResult> UpdateCoffee(int id, [FromBody] GreenCoffeeUpdateDto coffee)
         {
             await _service.GreenCoffeeService.UpdateGreenCoffeeAsync(id, coffee, true);
@@ -48,6 +51,7 @@ namespace RoastedCoffeeAccountingSystem.Controllers
         }
 
         [HttpDelete("{id:int}")]
+        [Authorize(Roles = "Administrator, Manager")]
         public async Task<IActionResult> DeleteCoffee(int id)
         {
             await _service.GreenCoffeeService.DeleteGreenCoffeeAsync(id, false);
