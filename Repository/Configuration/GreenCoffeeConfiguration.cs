@@ -16,7 +16,8 @@ namespace Repository.Configuration
                     Variety = "Arabica",
                     Country = "Brazil",
                     Region = "Santos",
-                    Weight = 59.5
+                    Weight = 59.5,
+                    IsExhausted = false
                 },
                 new GreenCoffee
                 {
@@ -24,7 +25,8 @@ namespace Repository.Configuration
                     Variety = "Arabica",
                     Country = "Columbia",
                     Region = "Excelso",
-                    Weight = 70
+                    Weight = 70,
+                    IsExhausted = false
                 },
                 new GreenCoffee
                 {
@@ -32,7 +34,8 @@ namespace Repository.Configuration
                     Variety = "Robusta",
                     Country = "Uganda",
                     Region = null,
-                    Weight = 20
+                    Weight = 20,
+                    IsExhausted = false
                 }
             );
         }

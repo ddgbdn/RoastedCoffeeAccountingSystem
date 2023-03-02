@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 
 namespace RoastedCoffeeAccountingSystem.Models
 {
@@ -18,6 +19,9 @@ namespace RoastedCoffeeAccountingSystem.Models
 
         [Range(0, 1000)]
         public double Weight { get; set; }
+
+        [Required]        
+        public bool IsExhausted { get; set; }
         public ICollection<Roasting>? Roastings { get; set; }
     }
 }

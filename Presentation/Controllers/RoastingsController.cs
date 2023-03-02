@@ -1,9 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Presentation.ActionFilters;
 using ServiceContracts;
 using Shared.DataTransferObjects;
 using Shared.RequestFeatures;
+using System.Data;
 using System.Text.Json;
 
 namespace RoastedCoffeeAccountingSystem.Controllers
@@ -20,6 +22,7 @@ namespace RoastedCoffeeAccountingSystem.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Viewer")]
         public async Task<IActionResult> GetRoastings([FromQuery] RoastingsParameters parameters)
         {
             var pagedRoastings = await _service.RoastingsService.GetRoastingsAsync(parameters, false);
@@ -29,6 +32,7 @@ namespace RoastedCoffeeAccountingSystem.Controllers
         }
 
         [HttpGet("{id:int}")]
+        [Authorize(Roles = "Viewer")]
         public async Task<IActionResult> GetRoasting(int id)
         {
             var roasting = await _service.RoastingsService.GetRoastingAsync(id, false);
@@ -37,6 +41,7 @@ namespace RoastedCoffeeAccountingSystem.Controllers
 
         [HttpPost]
         [ServiceFilter(typeof(ValidationFilterAttribute))]
+        [Authorize(Roles = "Administrator, Manager")]
         public async Task<IActionResult> CreateRoasting([FromBody] RoastingCreationDto roasting)
         {
             var roastingEntity = await _service.RoastingsService.CreateRoastingAsync(roasting);
@@ -45,6 +50,7 @@ namespace RoastedCoffeeAccountingSystem.Controllers
 
         [HttpPut("{id:int}")]
         [ServiceFilter(typeof(ValidationFilterAttribute))]
+        [Authorize(Roles = "Administrator, Manager")]
         public async Task<IActionResult> UpdateRoasting(int id, [FromBody] RoastingUpdateDto roasting)
         {
             await _service.RoastingsService.UpdateRoastingAsync(id, roasting, true);
@@ -52,6 +58,7 @@ namespace RoastedCoffeeAccountingSystem.Controllers
         }
 
         [HttpDelete("{id:int}")]
+        [Authorize(Roles = "Administrator, Manager")]
         public async Task<IActionResult>DeleteRoasting(int id)
         {
             await _service.RoastingsService.DeleteRoastingAsync(id, false);
