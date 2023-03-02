@@ -16,7 +16,7 @@ using System.Threading.Tasks;
 using System.CodeDom.Compiler;
 using System.Security.Cryptography;
 using Entities.Exceptions;
-using Entities.ConfigurationModels;
+using Entities.JwtSettings;
 using Microsoft.Extensions.Options;
 
 namespace Service
@@ -26,6 +26,7 @@ namespace Service
         private readonly ILoggerManager _logger;
         private readonly IMapper _mapper;
         private readonly IOptions<JwtConfiguration> _configuration;
+        private readonly JwtConfiguration _jwtConfiguration;
         private readonly UserManager<User> _userManager;
         private readonly JwtConfiguration _jwtConfiguration;
 
@@ -105,15 +106,18 @@ namespace Service
         }
 
         private JwtSecurityToken GenerateTokenOptions(SigningCredentials credentials, List<Claim> claims)
-            => new JwtSecurityToken
-                (
-                    issuer: _jwtConfiguration.ValidIssuer,
-                    audience: _jwtConfiguration.ValidAudience,
-                    claims: claims,
-                    expires: DateTime.Now.AddMinutes(Convert.ToDouble(_jwtConfiguration.ExpiresIn)),
-                    signingCredentials: credentials
-                );
-        
+        {
+            var tokenOptions = new JwtSecurityToken
+            (
+                issuer: _jwtConfiguration.ValidIssuer,
+                audience: _jwtConfiguration.ValidAudience,
+                claims: claims,
+                expires: DateTime.Now.AddMinutes(Convert.ToDouble(_jwtConfiguration.ExpiresIn)),
+                signingCredentials: credentials
+            );
+
+            return tokenOptions;
+        }
 
         private async Task<List<Claim>> GetClaims()
         {

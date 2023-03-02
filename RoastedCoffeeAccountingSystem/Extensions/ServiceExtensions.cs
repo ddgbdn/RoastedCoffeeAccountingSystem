@@ -1,5 +1,5 @@
 ﻿using Contracts;
-using Entities.ConfigurationModels;
+using Entities.JwtSettings;
 using Entities.Models;
 using LoggerService;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -71,7 +71,7 @@ namespace RoastedCoffeeAccountingSystem.Extensions
             });
         }
 
-        public static void AddJwtConfiguration(this IServiceCollection services, IConfiguration configuration)
-            => services.Configure<JwtConfiguration>(configuration.GetSection("jwtSection"));
+        public static void AddJwtConfiguration(this IServiceCollection services, IConfiguration configuration) 
+            => services.Configure<JwtConfiguration>(configuration.GetSection("JwtSettings"));
     }
 }
