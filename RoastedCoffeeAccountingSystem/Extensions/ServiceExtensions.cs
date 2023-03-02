@@ -1,4 +1,5 @@
 ﻿using Contracts;
+using Entities.JwtSettings;
 using Entities.Models;
 using LoggerService;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -45,7 +46,9 @@ namespace RoastedCoffeeAccountingSystem.Extensions
 
         public static void ConfigureJWT(this IServiceCollection services, IConfiguration configuration)
         {
-            var jwtSettings = configuration.GetSection("JwtSettings");
+            var jwtConfiguration = new JwtConfiguration();
+            configuration.Bind(jwtConfiguration.Section, jwtConfiguration);
+
             var secret = Environment.GetEnvironmentVariable("RoastingSystemSecret");
 
             services.AddAuthentication(options =>
@@ -61,11 +64,14 @@ namespace RoastedCoffeeAccountingSystem.Extensions
                     ValidateAudience = true,
                     ValidateLifetime = true,
                     ValidateIssuerSigningKey = true,
-                    ValidIssuer = jwtSettings["validIssuer"],
-                    ValidAudience = jwtSettings["validAudience"],
+                    ValidIssuer = jwtConfiguration.ValidIssuer,
+                    ValidAudience = jwtConfiguration.ValidAudience,
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secret))
                 };
             });
         }
+
+        public static void AddJwtConfiguration(this IServiceCollection services, IConfiguration configuration) 
+            => services.Configure<JwtConfiguration>(configuration.GetSection("JwtSettings"));
     }
 }
