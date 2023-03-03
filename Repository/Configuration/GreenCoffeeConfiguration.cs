@@ -35,7 +35,7 @@ namespace Repository.Configuration
                     Country = "Uganda",
                     Region = null,
                     Weight = 20,
-                    IsExhausted = false
+                    IsExhausted = true
                 }
             );
         }

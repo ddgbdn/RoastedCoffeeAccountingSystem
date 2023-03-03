@@ -4,6 +4,7 @@ using Presentation.ActionFilters;
 using ServiceContracts;
 using Shared.DataTransferObjects;
 using Shared.RequestFeatures;
+using System.Text.Json;
 
 namespace RoastedCoffeeAccountingSystem.Controllers
 {
@@ -17,10 +18,12 @@ namespace RoastedCoffeeAccountingSystem.Controllers
 
         [HttpGet]
         [Authorize(Roles = "Viewer")]
-        public async Task<IActionResult> GetAllCoffee()
+        public async Task<IActionResult> GetAllCoffee([FromQuery] GreenCoffeeParameters parameters)
         {
-            var coffee = await _service.GreenCoffeeService.GetAllGreenCoffeeAsync(false);
-            return Ok(coffee);
+            var pagedCoffee = await _service.GreenCoffeeService.GetAllGreenCoffeeAsync(parameters, false);
+            Response.Headers.Add("X-Pagination", JsonSerializer.Serialize(pagedCoffee.metaData));
+
+            return Ok(pagedCoffee.coffee);
         }
 
         [HttpGet("{id:int}")]
