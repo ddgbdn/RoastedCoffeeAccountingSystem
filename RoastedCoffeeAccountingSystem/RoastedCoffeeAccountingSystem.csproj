@@ -7,6 +7,19 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="wwwroot\html\**" />
+    <Compile Remove="wwwroot\scss\**" />
+    <Content Remove="wwwroot\html\**" />
+    <Content Remove="wwwroot\scss\**" />
+    <EmbeddedResource Remove="wwwroot\html\**" />
+    <EmbeddedResource Remove="wwwroot\scss\**" />
+    <None Remove="wwwroot\html\**" />
+    <None Remove="wwwroot\scss\**" />
+    <TypeScriptCompile Remove="wwwroot\html\**" />
+    <TypeScriptCompile Remove="wwwroot\scss\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Remove="C:\Users\ddgbdn\.nuget\packages\bootstrap\5.2.3\contentFiles\any\any\wwwroot\css\bootstrap-grid.css" />
     <Content Remove="C:\Users\ddgbdn\.nuget\packages\bootstrap\5.2.3\contentFiles\any\any\wwwroot\css\bootstrap-grid.css.map" />
     <Content Remove="C:\Users\ddgbdn\.nuget\packages\bootstrap\5.2.3\contentFiles\any\any\wwwroot\css\bootstrap-grid.min.css" />
@@ -71,16 +84,15 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="wwwroot\html\" />
-    <Folder Include="wwwroot\scss\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\Contracts\Contracts.csproj" />
     <ProjectReference Include="..\LoggerService\LoggerService.csproj" />
     <ProjectReference Include="..\Presentation\Presentation.csproj" />
     <ProjectReference Include="..\Repository\Repository.csproj" />
     <ProjectReference Include="..\Services\Service.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\" />
   </ItemGroup>
 
 </Project>

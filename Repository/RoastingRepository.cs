@@ -23,11 +23,11 @@ namespace Repository
             return PagedList<Roasting>.ToPagedList(roastings, parameters.PageNumber, parameters.PageSize);
         }
 
-        public async Task<Roasting> GetRoastingAsync(int id, bool trackChanges)
+        public async Task<Roasting?> GetRoastingAsync(int id, bool trackChanges)
             => await FindByCondition(r => r.Id == id, trackChanges)
                 .OrderByDescending(r => r.Id)
                 .Include(c => c.Coffee)
-                .SingleOrDefaultAsync()!;
+                .SingleOrDefaultAsync();
 
         public void CreateRoasting(Roasting roasting)
         {

@@ -1,0 +1,15 @@
+﻿{
+  "compileOnSave": true,
+  "compilerOptions": {
+    "noEmitOnError": true,
+    "noUnusedLocals":  true,
+    "noUnusedParameters": true,
+    "noImplicitReturns":  true,
+    "strict": true,
+    "sourceMap": true,
+    "target": "es6"
+  },
+  "include": [
+    "wwwroot/scripts/**/*"
+  ]
+}

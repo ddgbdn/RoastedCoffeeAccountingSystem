@@ -46,7 +46,7 @@ namespace Service
 
             var refreshToken = GenerateRefreshToken();
 
-            _user.RefreshToken = refreshToken;
+            _user!.RefreshToken = refreshToken;
 
             if (populateExp)
                 _user.RefreshTokenExpiryTime = DateTime.Now.AddDays(7);
@@ -62,7 +62,7 @@ namespace Service
         {
             var principal = GetPrincipalsFromExpiredToken(tokenDto.AccessToken);
 
-            var user = await _userManager.FindByNameAsync(principal.Identity.Name);
+            var user = await _userManager.FindByNameAsync(principal.Identity!.Name);
             if (user == null
                 || user.RefreshToken != tokenDto.RefreshToken
                 || user.RefreshTokenExpiryTime <= DateTime.Now)
@@ -122,7 +122,7 @@ namespace Service
         {
             var claims = new List<Claim>()
             {
-                new Claim(ClaimTypes.Name, _user.UserName)
+                new Claim(ClaimTypes.Name, _user!.UserName)
             };
 
             var roles = await _userManager.GetRolesAsync(_user);

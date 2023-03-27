@@ -4,10 +4,7 @@ using Entities.Models;
 using LoggerService;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Internal;
 using Microsoft.IdentityModel.Tokens;
 using Repository;
 using ServiceContracts;
@@ -18,11 +15,20 @@ namespace RoastedCoffeeAccountingSystem.Extensions
 {
     public static class ServiceExtensions
     {
-        public static void ConfigureIISIntegration(this IServiceCollection services) 
-            => services.Configure<IISOptions>(options =>
-               {
+        public static void ConfigureCors(this IServiceCollection services) =>  
+            services.AddCors(options =>
+            {
+                options.AddPolicy("CorsPolicy", builder =>
+                builder
+                    .AllowAnyOrigin()
+                    .AllowAnyMethod()
+                    .AllowAnyHeader());
+            });
+        public static void ConfigureIISIntegration(this IServiceCollection services) => 
+            services.Configure<IISOptions>(options =>
+            {
 
-               });
+            });
 
         public static void ConfigureLoggerService(this IServiceCollection services)
             => services.AddSingleton<ILoggerManager, LoggerManager>();
@@ -72,12 +78,12 @@ namespace RoastedCoffeeAccountingSystem.Extensions
                     ValidateIssuerSigningKey = true,
                     ValidIssuer = jwtConfiguration.ValidIssuer,
                     ValidAudience = jwtConfiguration.ValidAudience,
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secret))
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secret!))
                 };
             });
         }
 
-        public static void AddJwtConfiguration(this IServiceCollection services, IConfiguration configuration) 
+        public static void AddJwtConfiguration(this IServiceCollection services, IConfiguration configuration)
             => services.Configure<JwtConfiguration>(configuration.GetSection("JwtSettings"));
     }
 }

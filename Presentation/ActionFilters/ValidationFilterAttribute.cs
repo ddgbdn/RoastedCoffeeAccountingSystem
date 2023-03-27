@@ -16,7 +16,7 @@ namespace Presentation.ActionFilters
                 
         public void OnActionExecuting(ActionExecutingContext context)
         {
-            var parameter = context.ActionArguments.SingleOrDefault(kv => kv.Value.ToString().Contains("Dto")).Value;
+            var parameter = context.ActionArguments.SingleOrDefault(kv => kv.Value.ToString()!.Contains("Dto")).Value;
 
             if (parameter is null) 
             {
