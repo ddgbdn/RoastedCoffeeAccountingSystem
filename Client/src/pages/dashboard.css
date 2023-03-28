@@ -1,0 +1,17 @@
+.dashboardPage {
+    width: 100%;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: start;
+    place-content: start;
+    gap: 10px;
+    padding: 10px 0px;
+}
+
+.dashboardChild {
+    height: calc(50vh - 15px);
+    width: 88.4%;
+    background-color: #232323;
+    border-radius: 5px;
+    color: aliceblue;
+}

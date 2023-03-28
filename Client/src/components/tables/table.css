@@ -1,0 +1,69 @@
+table {
+    table-layout: fixed;
+    width: 100%;
+    background-color: #232323;
+    border-collapse: collapse;
+}
+
+tr {
+    border-bottom: 1px solid #434343;
+}
+
+td, th {    
+    color: aliceblue;
+    padding: 12px 10px;
+    font-size: 0.91rem;
+    text-align: left;
+    width: 150px;
+}
+
+th {
+    font-size: 0.95rem;
+}
+
+.pageInfo {
+    color: aliceblue;
+    font-size: 1.1rem;
+    margin-right: 40px;
+}
+
+.pagination {
+    height: 50px;
+    text-align: right;
+    padding: 5px;
+}
+
+.bi {
+    font-size: 1.1rem;
+}
+
+.pagination button {
+    border: none;
+    background-color: unset;
+    color: aliceblue;
+    padding: 5px;
+    cursor: pointer;    
+    margin-right: 20px;    
+    transition: all .2s ease;
+}
+
+.pagination button:hover {
+    background-color: #2b2b2b;
+    border-radius: 10px;
+}
+
+.actionButton {
+    border: none;
+    background-color: unset;
+    color: aliceblue;
+    margin-left: 5px;
+    transition: all .3s ease;
+}
+
+.edit:hover {
+    color: rgb(255, 183, 60);
+}
+
+.delete:hover {
+    color: rgb(255, 65, 65);
+}

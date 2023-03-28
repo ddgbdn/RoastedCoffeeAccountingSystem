@@ -1,0 +1,44 @@
+.localDashboard {
+    background-color: #232323;
+    border-radius: 5px;
+    position: relative;
+    text-align: center;
+    margin-top: 10px;
+}
+
+.dashboardSpan {
+    display: inline-block;
+    width: 100%;
+    font-size: 2.3rem;
+    margin-top: 20px;
+    padding-bottom: 25px;
+    border-bottom: 1px solid #b1b1b1;
+}
+
+.stats {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-around;
+    align-items: center;
+    position: absolute;
+    top: 50%;
+    transform: translate(0, -5%);
+    width: 100%;    
+}
+
+.stat{
+    width: 20%;
+    text-align: center;
+}
+
+.statDescription {
+    display: inline-block;
+    width: 100%;
+}
+
+.statValue {
+    display: inline-block;
+    width: 100%;
+    font-size: 3.5rem;
+}
+

@@ -1,0 +1,22 @@
+.page {
+    display: grid;
+    grid-template-columns: 6fr 2fr 1fr;
+    grid-template-rows: 30vh calc(70vh - 10px);
+    grid-template-areas: 
+        'dashboard dashboard .'
+        'table form .';
+    color: aliceblue;
+    gap: 10px 10px;
+}
+
+.greenCoffeeTable, .roastingTable {
+    grid-area: table;
+}
+
+.localDashboard {
+    grid-area: dashboard;
+}
+
+.formGridEl {
+    grid-area: form;
+}
