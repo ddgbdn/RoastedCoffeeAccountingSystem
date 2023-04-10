@@ -1,88 +1,74 @@
-import React, { useState } from 'react';
-import TablePaginationFooter from '../TablePaginationFooter';
+import React, { Dispatch, SetStateAction } from 'react';
+import TablePaginationFooter, { IPaginationInfo } from '../TablePaginationFooter';
 import '../table.css';
 import './coffeetable.css';
+import CoffeeRow from './CoffeeRow';
 
-function createData(variety: string, country: string, region: string, weight: number, date: Date) {
-    return {variety, country, region, weight, date};
-}
-  
-const rows = [
-    createData('Arabica', 'Brazil', 'Santos', 59.5, new Date()),
-    createData('Arabica', 'Columbia', 'Exselso', 70, new Date()),
-    createData('Arabica', 'Brazil', 'Santos', 59.5, new Date()),
-    createData('Arabica', 'Columbia', 'Exselso', 70, new Date()),
-    createData('Robusta', 'Uganda', '', 15, new Date()),
-    createData('Arabica', 'Columbia', 'Exselso', 70, new Date()),
-    createData('Robusta', 'Uganda', '', 15, new Date()),
-    createData('Arabica', 'Brazil', 'Santos', 59.5, new Date()),
-    createData('Robusta', 'Uganda', '', 15, new Date()),
-    createData('Arabica', 'Brazil', 'Santos', 59.5, new Date()),
-    createData('Arabica', 'Columbia', 'Exselso', 70, new Date()),
-    createData('Arabica', 'Brazil', 'Santos', 59.5, new Date()),
-    createData('Arabica', 'Columbia', 'Exselso', 70, new Date()),
-    createData('Robusta', 'Uganda', '', 15, new Date()),
-    createData('Arabica', 'Columbia', 'Exselso', 70, new Date()),
-    createData('Robusta', 'Uganda', '', 15, new Date()),
-    createData('Arabica', 'Brazil', 'Santos', 59.5, new Date()),
-    createData('Robusta', 'Uganda', '', 15, new Date())
-];
-
-const GreenCoffeeTable = () => {
-    const rowsPerPage = 10;
-    const [page, setPage] = useState(0);
-
-  return (
-    <div className='greenCoffeeTable'>
-        <table>
-            <thead>  
-                <tr style={{
-                    backgroundColor: "#191919"
-                }}>
-                    <th>Variety</th>
-                    <th>Country</th>
-                    <th>Region</th>
-                    <th>Arrival date</th>
-                    <th style={{
-                        textAlign: 'right'
-                    }}>Weight</th>
-                    <th style={{
-                        textAlign: "right"
-                    }}>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                {rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map((coffee) => (
-                    <tr>
-                        <td>{coffee.variety}</td>
-                        <td>{coffee.country}</td>
-                        <td>{coffee.region}</td>
-                        <td>{coffee.date.toLocaleDateString()}</td>
-                        <td style={{
+const GreenCoffeeTable = ({coffee, paginationInfo, setPageNumber, handleEdit, handleMutationSync}: ICoffeeTableProps) => {
+    return (
+        <div className='greenCoffeeTable'>
+            <table>
+                <thead>  
+                    <tr style={{
+                        backgroundColor: "#191919"
+                    }}>
+                        <th>Variety</th>
+                        <th>Region</th>
+                        <th style={{
                             textAlign: 'right'
-                        }}>{coffee.weight}</td>
-                        <td style={{
-                            textAlign: 'right'
-                        }}>
-                            <button className='actionButton edit'>
-                                <i className='bi bi-pencil-square'/>
-                            </button>
-                            <button className='actionButton delete'>
-                                <i className='bi bi-trash3'/>
-                            </button>
-                        </td>
+                        }}>Weight</th>
+                        <th style={{
+                            textAlign: "right"
+                        }}>Actions</th>
                     </tr>
-                ))}
-            </tbody>
-            <tfoot>
-                <tr style={{backgroundColor: '#191919'}}>
-                    <TablePaginationFooter cols={6}/>  
-                </tr>                
-            </tfoot>
-        </table>
-    </div>
+                </thead>
+                <tbody>
+                    {[//Filling empty rows for last page 
+                        ...coffee,
+                        ...Array(paginationInfo.PageSize - coffee.length)
+                            .fill({id: -1, variety: '', fullRegion: '', weight: 0, isExhausted: true})
+                    ].map((c: ITableCoffee) => { 
+                        return (
+                            <CoffeeRow 
+                                coffee={c}
+                                handleEdit={handleEdit}
+                                handleMutationSync={handleMutationSync}
+                                key={c.id !== -1 ? c.id : Math.random()}
+                            />
+                        )
+                    })
+                    }
+                </tbody>
+                <tfoot>
+                    <tr style={{backgroundColor: '#191919'}}>
+                        <TablePaginationFooter 
+                            cols={4}
+                            paginationInfo={paginationInfo}
+                            setPageNumber={setPageNumber}
+                        />  
+                    </tr>                
+                </tfoot>
+            </table>
+        </div>
   )
+}
+
+interface ICoffeeTableProps {
+    coffee: ITableCoffee[],
+    paginationInfo: IPaginationInfo,
+    setPageNumber: Dispatch<SetStateAction<number>>,
+    handleEdit: (coffee: ITableCoffee) => void,
+    handleMutationSync: () => void    
+}
+
+export interface ITableCoffee {
+    id: number,
+    variety: string,
+    country: string,
+    region: string,
+    fullRegion: string, 
+    weight: number,
+    isExhausted: boolean
 }
 
 export default GreenCoffeeTable

@@ -2,8 +2,8 @@
     width: 100%;
     display: flex;
     flex-flow: column nowrap;
-    justify-content: start;
-    place-content: start;
+    justify-content: flex-start;
+    place-content: flex-start;
     gap: 10px;
     padding: 10px 0px;
 }

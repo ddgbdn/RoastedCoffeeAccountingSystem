@@ -1,19 +1,23 @@
 .sideBar{
-    width: 100%;
+    width: 260px;
     height: 100vh;
+    position: -webkit-sticky;
     position: sticky;
     top: 0;
     background-color: #232323;
     z-index: 0;
+    transition: all 0.4s ease-in-out;
 
     &Logo{
         display: grid;
         place-items: center;
         text-align: center;
-        height: 120px;
+        height: 100px;
         font-size: 1.5rem;
         font-weight: 700;
         color:#d8d8d8;
+        margin: 10px 0px;
+        white-space: nowrap;
     }
 
     &Menu{
@@ -27,7 +31,7 @@
             font-size: 1.25rem;
             font-weight: 500;
             color: #d8d8d8;
-            transition: color 0.3s ease-in-out;
+            transition: all 0.4s ease-in-out;
 
             &.active {
                 color: #000000;
@@ -57,7 +61,48 @@
             background-color: #d8d8d8;
             z-index: -1;
             transform: translateX(-50%);
-            transition: 0.3s ease-in-out;
+            transition: all 0.3s ease-in-out;
         }
     }
+}
+
+.sideBar.collapsed {
+    width: 60px;
+}
+
+.sideBarLogo.collapsed {
+    font-size: 0.8rem;
+}
+
+.sideBarMenuIndicator.collapsed {
+    width: calc(100% - 5px);
+}
+
+.sideBarMenuItem.collapsed {
+    padding: 1rem 1.1rem;
+}
+
+.collapseButton {    
+    position: absolute;
+    bottom: 2%;
+    right: 5%;
+    transform: rotate(90deg);
+    color: aliceblue;
+    background-color: unset;
+    border: unset;
+    transition: all 0.4s ease;
+}
+
+.collapseButton.collapsed {
+    right: 25%
+}
+
+.collapseButton i {
+    font-size: 1.5rem;
+}
+
+.collapseButton:hover {
+    color: rgb(255, 255, 255);
+    background-color: #2b2b2b;
+    border-radius: 5px;
 }

@@ -1,33 +1,10 @@
-import React, { useState } from 'react';
-import TablePaginationFooter from '../TablePaginationFooter';
+import React, { Dispatch, SetStateAction } from 'react';
+import TablePaginationFooter, { IPaginationInfo } from '../TablePaginationFooter';
 import '../table.css';
 import './roastingtable.css';
+import RoastingRow from './RoastingRow';
 
-function createData(coffeeRegion: string, amount: number, date: Date) {
-    return {coffeeRegion, amount, date};
-}
-  
-const rows = [
-    createData('Columbia Excelso', 4.02, new Date()),
-    createData('Columbia Excelso', 4.02, new Date()),
-    createData('Columbia Excelso', 4.02, new Date()),
-    createData('Columbia Excelso', 4.02, new Date()),
-    createData('Columbia Excelso', 4.02, new Date()),
-    createData('Columbia Excelso', 4.02, new Date()),
-    createData('Columbia Excelso', 4.02, new Date()),
-    createData('Columbia Excelso', 4.02, new Date()),
-    createData('Columbia Excelso', 4.02, new Date()),
-    createData('Columbia Excelso', 4.02, new Date()),
-    createData('Columbia Excelso', 4.02, new Date()),
-    createData('Columbia Excelso', 4.02, new Date()),
-    createData('Columbia Excelso', 4.02, new Date()),
-    createData('Columbia Excelso', 4.02, new Date()),
-];
-
-const GreenCoffeeTable = () => {
-    const rowsPerPage = 10;
-    const [page, setPage] = useState(0);
-
+const RoastingsTable = ({roastings, paginationInfo, setPageNumber, handleEdit, handleMutationSync}: IRoatingsTableProps) => {
   return (
     <div className='roastingTable'>
         <table>
@@ -48,30 +25,29 @@ const GreenCoffeeTable = () => {
                 </tr>
             </thead>
             <tbody>
-                {rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map((roastings) => (
-                    <tr>
-                        <td>{roastings.coffeeRegion}</td>
-                        <td>{roastings.date.toDateString()}</td>
-                        <td style={{
-                            textAlign: 'right'
-                        }}>{roastings.amount}</td>
-                        <td style={{
-                            textAlign: 'right'
-                        }}>
-                            <button className='actionButton edit'>
-                                <i className='bi bi-pencil-square'/>
-                            </button>
-                            <button className='actionButton delete'>
-                                <i className='bi bi-trash3'/>
-                            </button>
-                        </td>
-                    </tr>
-                ))}
+                {[//Filling empty rows for last page
+                    ...roastings,
+                    ...Array(paginationInfo.PageSize - roastings.length)
+                        .fill({id: -1, coffeeFullRegion: '', date: new Date(), amount: 0})
+                ].map((r: ITableRoasting) => {
+                    return (
+                        <RoastingRow
+                            roasting={r}
+                            handleEdit={handleEdit}
+                            handleMutationSync={handleMutationSync}
+                            key={r.id !== -1 ? r.id : Math.random()}
+                        />
+                    )
+                })
+                }
             </tbody>
             <tfoot>
                 <tr style={{backgroundColor: '#191919'}}>
-                    <TablePaginationFooter cols={4}/>  
+                    <TablePaginationFooter 
+                        cols={4}
+                        paginationInfo={paginationInfo}
+                        setPageNumber={setPageNumber}
+                    /> 
                 </tr>                
             </tfoot>
         </table>
@@ -79,4 +55,20 @@ const GreenCoffeeTable = () => {
   )
 }
 
-export default GreenCoffeeTable
+interface IRoatingsTableProps {
+    roastings: ITableRoasting[],
+    paginationInfo: IPaginationInfo,
+    setPageNumber: Dispatch<SetStateAction<number>>
+    handleEdit: (coffee: ITableRoasting) => void,
+    handleMutationSync: () => void 
+}
+
+export interface ITableRoasting {
+    id: number,
+    coffeeId: number,
+    coffeeFullRegion: string,
+    date: string,
+    amount: number
+}
+
+export default RoastingsTable

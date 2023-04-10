@@ -1,8 +1,12 @@
 table {
     table-layout: fixed;
-    width: 100%;
     background-color: #232323;
     border-collapse: collapse;
+    width:100%;
+}
+
+.roastingTable, .greenCoffeeTable {
+    overflow-x: auto;
 }
 
 tr {
@@ -19,6 +23,10 @@ td, th {
 
 th {
     font-size: 0.95rem;
+}
+
+.exhausted {
+    opacity: 50%;
 }
 
 .pageInfo {
@@ -52,12 +60,21 @@ th {
     border-radius: 10px;
 }
 
+[disabled=""]:hover {
+    background-color: unset !important;
+}
+
+.disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
 .actionButton {
     border: none;
     background-color: unset;
     color: aliceblue;
     margin-left: 5px;
-    transition: all .3s ease;
+    transition: all .2s ease;
 }
 
 .edit:hover {
@@ -66,4 +83,19 @@ th {
 
 .delete:hover {
     color: rgb(255, 65, 65);
+}
+
+.buttons {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.tableLabel {
+    font-size: 0.8rem;    
+}
+
+.tableCheckbox:checked {
+    accent-color: #232323;
 }

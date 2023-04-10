@@ -21,3 +21,15 @@ a {
   text-decoration: none;
   color: unset;
 }
+
+.offscreen {
+  position: absolute;
+  left: -9999px;
+}
+
+.error {
+  background-color: lightpink;
+  color: firebrick;
+  padding: 0.5rem;
+  margin-bottom: 0.5rem;
+}

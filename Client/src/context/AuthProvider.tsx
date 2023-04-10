@@ -1,5 +1,5 @@
-import React, { PropsWithChildren, useState } from 'react'
-import { AuthContext, authContextDefaults, IAuthContext, IAuthData } from './AuthContext';
+import { PropsWithChildren, useState } from 'react'
+import { AuthContext, authContextDefaults, IAuthData } from './AuthContext';
 
 const AuthProvider = ({children} : PropsWithChildren) => {
     const [auth, setAuth] = useState<IAuthData>(authContextDefaults.authData);

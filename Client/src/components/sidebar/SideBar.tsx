@@ -16,7 +16,7 @@ const sidebarNavItems: NavItem[] = [
         section: 'roastings'
     },
     {
-        display: "Green coffee",
+        display: "Green Coffee",
         icon: <i className='bi bi-basket3-fill'></i>,
         to: "/greencoffee",
         section: 'greencoffee'
@@ -26,6 +26,7 @@ const sidebarNavItems: NavItem[] = [
 const SideBar = (): JSX.Element => {
     const [activeIndex, setActiveIndex] = useState(0);
     const [stepHeight, setStepHeight] = useState(0);
+    const [collapsed, setCollapsed] = useState(true);
     const sideBarRef = useRef<HTMLDivElement | null>(null);
     const indicatorRef = useRef<HTMLDivElement | null>(null);
     const location = useLocation();
@@ -47,13 +48,15 @@ const SideBar = (): JSX.Element => {
     }, [location]);
 
     return(
-        <div className='sideBar'>
-            <h1 className='sideBarLogo'>Brew Place Roastery</h1>
+        <div className={`sideBar ${collapsed ? 'collapsed' : ''}`}>
+            <h1 className={`sideBarLogo`}>
+                {collapsed ? 'BP' : 'Brew Place Roastery'}
+            </h1>
             <hr />
             <div ref={sideBarRef} className='sideBarMenu'>
                 <div 
                     ref={indicatorRef} 
-                    className="sideBarMenuIndicator"
+                    className={`sideBarMenuIndicator ${collapsed ? 'collapsed' : ''}`}
                     style={{
                         transform: `translateX(-50%) translateY(${activeIndex * stepHeight}px)`
                     }}
@@ -61,7 +64,10 @@ const SideBar = (): JSX.Element => {
                 {
                     sidebarNavItems.map((item, index) => (
                         <Link to={item.to} key={index}>
-                            <div className={`sideBarMenuItem ${activeIndex === index ? 'active' : ''}`}>
+                            <div className={`sideBarMenuItem 
+                                ${activeIndex === index ? 'active' : ''} 
+                                ${collapsed ? 'collapsed' : ''}`
+                                }>
                                 <div className="sideBarMenuItemIcon">
                                     {item.icon}
                                 </div>
@@ -73,6 +79,14 @@ const SideBar = (): JSX.Element => {
                     ))
                 }
             </div>
+            <button 
+                className={`collapseButton ${collapsed ? 'collapsed' : ''}`}
+                onClick={() => {setCollapsed(prev => !prev)}}>
+                <i className={ collapsed 
+                    ? "bi bi-arrows-expand"
+                    : "bi bi-arrows-collapse" 
+                }/>
+            </button>
         </div>
     )
 }
