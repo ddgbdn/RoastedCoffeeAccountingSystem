@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using Contracts;
-using Entities.Models;
+using RoastedCoffeeAccountingSystem.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using ServiceContracts;
@@ -15,8 +15,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.CodeDom.Compiler;
 using System.Security.Cryptography;
-using Entities.Exceptions;
-using Entities.JwtSettings;
+using RoastedCoffeeAccountingSystem.Exceptions;
+using RoastedCoffeeAccountingSystem.JwtSettings;
 using Microsoft.Extensions.Options;
 
 namespace Service
@@ -42,6 +42,8 @@ namespace Service
 
         public async Task<TokenDto> CreateToken(bool populateExp)
         {
+            // Consider applying httpOnly
+
             var tokenOptions = GenerateTokenOptions(GetSigningCredentials(), await GetClaims());
 
             var refreshToken = GenerateRefreshToken();
@@ -153,7 +155,7 @@ namespace Service
                 ValidateIssuerSigningKey = true,
                 IssuerSigningKey = new SymmetricSecurityKey(
                     Encoding.UTF8.GetBytes(Environment.GetEnvironmentVariable("RoastingSystemSecret")!)),
-                ValidateLifetime = true
+                ValidateLifetime = false
             };
 
             var tokenHandler = new JwtSecurityTokenHandler();

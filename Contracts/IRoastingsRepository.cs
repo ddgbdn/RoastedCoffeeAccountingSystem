@@ -9,5 +9,6 @@ namespace Contracts
         Task<Roasting?> GetRoastingAsync(int id, bool trackChanges);
         void CreateRoasting(Roasting roasting);
         void DeleteRoasting(Roasting roasitng);
+        Task<RoastingStats> GetRoastingStatsAsync(DateTime date);
     }
 }

@@ -9,5 +9,6 @@ namespace Contracts
         Task<GreenCoffee?> GetGreenCoffeeAsync(int id, bool trackChanges);
         void CreateGreenCoffee(GreenCoffee greenCoffee);
         void DeleteGreenCoffee(GreenCoffee greenCoffee);
+        Task<GreenCoffeeStats> GetGreenCoffeeStatsAsync();
     }
 }

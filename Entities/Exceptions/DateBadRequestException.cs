@@ -6,10 +6,8 @@ using System.Threading.Tasks;
 
 namespace RoastedCoffeeAccountingSystem.Exceptions
 {
-    public abstract class NotFoundException : Exception
+    public class DateBadRequestException : BadRequestException
     {
-        protected NotFoundException(string message) : base(message) 
-        {
-        }
+        public DateBadRequestException() : base("Date should be later than 01.01.2022") { }
     }
 }

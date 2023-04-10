@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Entities.Models
+namespace RoastedCoffeeAccountingSystem.Models
 {
     public class User : IdentityUser
     {

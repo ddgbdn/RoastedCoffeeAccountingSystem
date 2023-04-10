@@ -10,5 +10,6 @@ namespace ServiceContracts
         Task<GreenCoffeeDto> CreateGreenCoffeeAsync(GreenCoffeeCreationDto greenCoffee);
         Task DeleteGreenCoffeeAsync(int id, bool trackChanges);
         Task UpdateGreenCoffeeAsync(int id, GreenCoffeeUpdateDto greenCoffee, bool trackChanges);
+        Task<GreenCoffeeStatsDto> GetGreenCoffeeStatsAsync();
     }
 }

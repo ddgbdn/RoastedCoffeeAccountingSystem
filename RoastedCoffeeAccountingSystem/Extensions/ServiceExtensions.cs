@@ -1,6 +1,6 @@
 ﻿using Contracts;
-using Entities.JwtSettings;
-using Entities.Models;
+using RoastedCoffeeAccountingSystem.JwtSettings;
+using RoastedCoffeeAccountingSystem.Models;
 using LoggerService;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
@@ -20,9 +20,10 @@ namespace RoastedCoffeeAccountingSystem.Extensions
             {
                 options.AddPolicy("CorsPolicy", builder =>
                 builder
-                    .AllowAnyOrigin()
+                    .WithOrigins("http://localhost:3000/")
                     .AllowAnyMethod()
-                    .AllowAnyHeader());
+                    .AllowAnyHeader()
+                    .AllowCredentials());
             });
         public static void ConfigureIISIntegration(this IServiceCollection services) => 
             services.Configure<IISOptions>(options =>

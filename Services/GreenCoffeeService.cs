@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using Contracts;
-using Entities.Exceptions;
+using RoastedCoffeeAccountingSystem.Exceptions;
 using RoastedCoffeeAccountingSystem.Models;
 using ServiceContracts;
 using Shared.DataTransferObjects;
@@ -63,6 +63,12 @@ namespace Services
             await _repository.SaveAsync();
         }
 
+        public async Task<GreenCoffeeStatsDto> GetGreenCoffeeStatsAsync()
+        {
+            var coffeeStats = await _repository.GreenCoffee.GetGreenCoffeeStatsAsync();
+            return _mapper.Map<GreenCoffeeStatsDto>(coffeeStats);
+        }
+
         private async Task<GreenCoffee> GetCoffeeWithNullCheck(int id, bool trackChanges)
         {
             var coffee = await _repository.GreenCoffee.GetGreenCoffeeAsync(id, trackChanges);
@@ -71,5 +77,6 @@ namespace Services
 
             return coffee;
         }
+
     }
 }

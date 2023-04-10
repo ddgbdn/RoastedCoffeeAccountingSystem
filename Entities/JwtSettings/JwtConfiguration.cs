@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Entities.JwtSettings
+namespace RoastedCoffeeAccountingSystem.JwtSettings
 {
     public class JwtConfiguration
     {

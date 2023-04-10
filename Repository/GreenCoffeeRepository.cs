@@ -17,8 +17,7 @@ namespace Repository
             var coffee = await FindByCondition(
                     c => !c.IsExhausted
                     || (c.IsExhausted && parameters.IncludeExhausted), trackChanges)
-                .OrderByDescending(c => !c.IsExhausted)
-                .ThenBy(c => c.Id)
+                .OrderByDescending(c => c.Id)
                 .ToListAsync();
 
             return PagedList<GreenCoffee>.ToPagedList(coffee, parameters.PageNumber, parameters.PageSize);
@@ -31,5 +30,36 @@ namespace Repository
         public void CreateGreenCoffee(GreenCoffee greenCoffee) => Create(greenCoffee);
 
         public void DeleteGreenCoffee(GreenCoffee greenCoffee) => Delete(greenCoffee);
+
+        public async Task<GreenCoffeeStats> GetGreenCoffeeStatsAsync()
+        {
+            var coffee = FindAll(false);
+            
+            var totalSacks = await coffee.CountAsync();
+
+            var availableSacks = await coffee
+                .Where(c => !c.IsExhausted)
+                .CountAsync();
+
+            var totalNetworth = await coffee.SumAsync(c => c.Weight);
+
+            var availableNetworth = await coffee
+                .Where(c => !c.IsExhausted)
+                .CountAsync();
+
+            var countryCounts = await coffee
+                .GroupBy(c => c.Country)
+                .Select(g => new Country { Name = g.Key ?? "", Count = g.Count() })
+                .ToListAsync();
+
+            return new GreenCoffeeStats
+            {
+                TotalSacks = totalSacks,
+                AvailableSacks = availableSacks,
+                TotalNetworth = totalNetworth,
+                AvailableNetworth = availableNetworth,
+                Countries = countryCounts
+            };
+        }
     }
 }

@@ -1,6 +1,6 @@
 ﻿using Contracts;
-using Entities.ErrorModel;
-using Entities.Exceptions;
+using RoastedCoffeeAccountingSystem.ErrorModel;
+using RoastedCoffeeAccountingSystem.Exceptions;
 using Microsoft.AspNetCore.Diagnostics;
 using System.Net;
 

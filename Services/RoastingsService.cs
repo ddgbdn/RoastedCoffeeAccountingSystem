@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using Contracts;
-using Entities.Exceptions;
+using RoastedCoffeeAccountingSystem.Exceptions;
 using RoastedCoffeeAccountingSystem.Models;
 using ServiceContracts;
 using Shared.DataTransferObjects;
@@ -65,6 +65,17 @@ namespace Services
             _mapper.Map(roasting, roastingEntity);
             await _repository.SaveAsync();
         }
+
+        public async Task<RoastingStatsDto> GetRoastingStatsAsync(DateTime date)
+        {
+            if (date < new DateTime(2022, 1, 1))
+                throw new DateBadRequestException();
+
+            var roastingStats = await _repository.Roastings.GetRoastingStatsAsync(date);
+            
+            return _mapper.Map<RoastingStatsDto>(roastingStats);
+        }
+
         private async Task<Roasting> GetRoastingWithNullCheck(int id, bool trackChanges)
         {
             var roasting = await _repository.Roastings.GetRoastingAsync(id, trackChanges);

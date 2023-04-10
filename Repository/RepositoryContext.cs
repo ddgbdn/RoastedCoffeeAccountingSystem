@@ -1,8 +1,7 @@
-﻿using Entities.Models;
+﻿using RoastedCoffeeAccountingSystem.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Repository.Configuration;
-using RoastedCoffeeAccountingSystem.Models;
 using System.Security.Principal;
 
 public class RepositoryContext : IdentityDbContext<User>

@@ -6,5 +6,5 @@ using System.Threading.Tasks;
 
 namespace Shared.DataTransferObjects
 {
-    public record GreenCoffeeUpdateDto : GreenCoffeeManipulationDto;
+    public record GreenCoffeeUpdateDto(bool IsExhausted) : GreenCoffeeManipulationDto;
 }

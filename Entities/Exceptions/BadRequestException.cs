@@ -5,7 +5,7 @@ using System.Reflection.Metadata;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Entities.Exceptions
+namespace RoastedCoffeeAccountingSystem.Exceptions
 {
     public class BadRequestException : Exception
     {

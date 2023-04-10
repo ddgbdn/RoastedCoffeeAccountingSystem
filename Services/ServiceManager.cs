@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using Contracts;
-using Entities.JwtSettings;
-using Entities.Models;
+using RoastedCoffeeAccountingSystem.JwtSettings;
+using RoastedCoffeeAccountingSystem.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
