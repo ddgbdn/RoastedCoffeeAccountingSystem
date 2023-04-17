@@ -23,6 +23,7 @@ namespace RoastedCoffeeAccountingSystem.Mapper
             CreateMap<RoastingUpdateDto, Roasting>();
 
             CreateMap<UserRegistrationDto, User>();
+            CreateMap<User, UserDto>();
 
             CreateMap<RoastingStats, RoastingStatsDto>();
             CreateMap<GreenCoffeeStats, GreenCoffeeStatsDto>();

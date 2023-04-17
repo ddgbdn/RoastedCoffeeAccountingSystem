@@ -37,27 +37,25 @@ namespace Repository
             
             var totalSacks = await coffee.CountAsync();
 
-            var availableSacks = await coffee
-                .Where(c => !c.IsExhausted)
-                .CountAsync();
+            var availableSacks = await coffee.CountAsync(c => !c.IsExhausted);
 
             var totalNetworth = await coffee.SumAsync(c => c.Weight);
 
             var availableNetworth = await coffee
                 .Where(c => !c.IsExhausted)
-                .CountAsync();
+                .SumAsync(c => c.Weight);
 
             var countryCounts = await coffee
                 .GroupBy(c => c.Country)
-                .Select(g => new Country { Name = g.Key ?? "", Count = g.Count() })
+                .Select(g => new Country { Name = g.Key ?? "unknown", Count = g.Count() })
                 .ToListAsync();
 
             return new GreenCoffeeStats
             {
                 TotalSacks = totalSacks,
                 AvailableSacks = availableSacks,
-                TotalNetworth = totalNetworth,
-                AvailableNetworth = availableNetworth,
+                TotalAmount = totalNetworth,
+                AvailableAmount = availableNetworth,
                 Countries = countryCounts
             };
         }

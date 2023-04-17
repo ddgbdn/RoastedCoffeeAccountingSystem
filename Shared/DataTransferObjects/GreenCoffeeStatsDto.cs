@@ -8,5 +8,5 @@ using System.Threading.Tasks;
 
 namespace Shared.DataTransferObjects
 {
-    public record GreenCoffeeStatsDto(int TotalSacks, int AvailableSacks, double TotalNetworth, double AvailableNetworth, List<Country> Countries);
+    public record GreenCoffeeStatsDto(int TotalSacks, int AvailableSacks, double TotalAmount, double AvailableAmount, List<Country> Countries);
 }

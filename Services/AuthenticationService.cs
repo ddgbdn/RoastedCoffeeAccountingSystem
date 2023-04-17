@@ -18,6 +18,7 @@ using System.Security.Cryptography;
 using RoastedCoffeeAccountingSystem.Exceptions;
 using RoastedCoffeeAccountingSystem.JwtSettings;
 using Microsoft.Extensions.Options;
+using Microsoft.EntityFrameworkCore;
 
 namespace Service
 {
@@ -60,6 +61,22 @@ namespace Service
             return new TokenDto(accessToken, refreshToken);
         }
 
+        public async Task DeleteToken(TokenDto tokenDto)
+        {
+            var principal = GetPrincipalsFromExpiredToken(tokenDto.AccessToken);
+
+            var user = await _userManager.FindByNameAsync(principal.Identity!.Name);
+            if (user == null
+                || user.RefreshToken != tokenDto.RefreshToken
+                || user.RefreshTokenExpiryTime <= DateTime.Now)
+                throw new RefreshTokenBadRequest();
+
+            _user = user;
+            _user.RefreshToken = null;
+
+            await _userManager.UpdateAsync(_user);
+        }
+
         public async Task<TokenDto> RefreshToken(TokenDto tokenDto)
         {
             var principal = GetPrincipalsFromExpiredToken(tokenDto.AccessToken);
@@ -75,6 +92,28 @@ namespace Service
             return await CreateToken(false);
         }
 
+        public async Task<IEnumerable<UserDto>> GetUsers()
+        {
+            //var users = await _userManager.Users.ToListAsync();
+
+            //var userDtos = await Task.WhenAll(users.Select(async u => new UserDto
+            //    (
+            //        u.UserName,
+            //        await _userManager.GetRolesAsync(u)
+            //    )));
+
+            var userDtos = (await _userManager.Users.ToListAsync())
+                .Select(async u => new UserDto
+                (
+                    u.UserName,
+                    $"{u.FirstName} {u.LastName}",
+                    await _userManager.GetRolesAsync(u)
+                ))
+                .Select(t => t.Result); //TODO: Try to find way to make it truly async
+
+            return userDtos;
+        }
+
         public async Task<IdentityResult> RegisterUser(UserRegistrationDto userRegistrationDto)
         {
             var user = _mapper.Map<User>(userRegistrationDto);
@@ -85,6 +124,15 @@ namespace Service
                 await _userManager.AddToRolesAsync(user, userRegistrationDto.Roles);
 
             return result;
+        }
+
+        public async Task<IdentityResult> DeleteUser(string username)
+        {
+            var user = await _userManager.FindByNameAsync(username);
+            var roles = await _userManager.GetRolesAsync(user);
+
+            await _userManager.RemoveFromRolesAsync(user, roles);
+            return await _userManager.DeleteAsync(user);
         }
 
         public async Task<bool> ValidateUser(UserAuthenticationDto userAuthenticationDto)

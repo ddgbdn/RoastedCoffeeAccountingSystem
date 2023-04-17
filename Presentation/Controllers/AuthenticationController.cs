@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Presentation.ActionFilters;
 using ServiceContracts;
@@ -19,6 +20,15 @@ namespace Presentation.Controllers
 
         public AuthenticationController(IServiceManager services) => _service = services;
 
+        [HttpGet("users")]
+        [Authorize(Roles = "Administrator")]
+        public async Task<IActionResult> GetUsers()
+        {
+            var users = await _service.AuthenticationService.GetUsers();
+
+            return Ok(users);
+        }
+
         [HttpPost]
         [ServiceFilter(typeof(ValidationFilterAttribute))]
         [Authorize(Roles = "Administrator")]
@@ -35,6 +45,14 @@ namespace Presentation.Controllers
             }
 
             return StatusCode(201);
+        }
+
+        [HttpDelete("user")]
+        public async Task<IActionResult> DeleteUser([FromBody] UserDeleteDto userDeleteDto)
+        {
+            await _service.AuthenticationService.DeleteUser(userDeleteDto.UserName);
+
+            return NoContent();
         }
 
         [HttpPost("login")]

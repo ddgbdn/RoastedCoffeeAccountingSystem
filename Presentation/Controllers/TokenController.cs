@@ -27,5 +27,13 @@ namespace Presentation.Controllers
         {
             return Ok(await _service.AuthenticationService.RefreshToken(tokenDto));
         }
+
+        [HttpPost("logout")]
+        [ServiceFilter(typeof(ValidationFilterAttribute))]
+        public async Task<IActionResult> Forget([FromBody] TokenDto tokenDto)
+        {
+            await _service.AuthenticationService.DeleteToken(tokenDto);
+            return Ok();
+        }
     }
 }
