@@ -1,7 +1,6 @@
 import React, { Dispatch, SetStateAction } from 'react';
 import TablePaginationFooter, { IPaginationInfo } from '../TablePaginationFooter';
 import '../table.css';
-import './roastingtable.css';
 import RoastingRow from './RoastingRow';
 
 const RoastingsTable = ({roastings, paginationInfo, setPageNumber, handleEdit, handleMutationSync}: IRoatingsTableProps) => {

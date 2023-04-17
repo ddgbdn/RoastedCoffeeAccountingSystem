@@ -1,6 +1,5 @@
 import React from 'react'
 import '../localdashboard.css'
-import './coffeedashboard.css';
 import { ICoffeeStats } from '../maindashboard/MainCoffeeDashboard';
 
 const GreenCoffeeDashboard = ({coffeeStats}: IGreenCoffeeDashboardProps) => {

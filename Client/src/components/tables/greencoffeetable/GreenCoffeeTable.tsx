@@ -1,7 +1,6 @@
 import React, { Dispatch, SetStateAction } from 'react';
 import TablePaginationFooter, { IPaginationInfo } from '../TablePaginationFooter';
 import '../table.css';
-import './coffeetable.css';
 import CoffeeRow from './CoffeeRow';
 
 const GreenCoffeeTable = ({coffee, paginationInfo, setPageNumber, handleEdit, handleMutationSync}: ICoffeeTableProps) => {

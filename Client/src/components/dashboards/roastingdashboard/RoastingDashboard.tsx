@@ -1,6 +1,5 @@
 import React, { Dispatch, SetStateAction} from 'react'
 import '../localdashboard.css'
-import './roastingdashboard.css';
 import { IRoastingStats } from '../maindashboard/MainRoastingsDashboard';
 
 const RoastingsDashboard = ({RoastingStats, date, setDate}: ILocalRoastingsDashboardProps) => {
