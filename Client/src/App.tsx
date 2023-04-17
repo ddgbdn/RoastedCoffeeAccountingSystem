@@ -6,16 +6,12 @@ import Dashboard from './pages/Dashboard';
 import Roastings from './pages/Roastings';
 import GreenCoffee from './pages/GreenCoffee';
 import Login from './components/login/Login';
-import RequireAuth from './components/auth/RequireAuth';
 import ErrorPage from './pages/ErrorPage';
-import AuthProvider from './context/AuthProvider';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-
-const queryClient = new QueryClient();
+import Users from './pages/Users';
 
 const router = createBrowserRouter([
     {
-        path: 'login',
+        index: true,
         element: <Login />,
     },
     {
@@ -24,22 +20,20 @@ const router = createBrowserRouter([
         errorElement: <ErrorPage />,
         children: [
             {
-                element: <RequireAuth />,
-                children: [
-                    {
-                        index: true,
-                        path: '/dashboard',
-                        element: <Dashboard/>
-                    },
-                    {
-                        path: '/roastings',
-                        element: <Roastings/>
-                    },
-                    {
-                        path: '/greencoffee',
-                        element: <GreenCoffee/>
-                    },
-                ]
+                path: '/dashboard',
+                element: <Dashboard/>
+            },
+            {
+                path: '/roastings',
+                element: <Roastings/>
+            },
+            {
+                path: '/greencoffee',
+                element: <GreenCoffee/>
+            },
+            {
+                path: '/users',
+                element: <Users />
             }
         ]
     }
@@ -47,11 +41,7 @@ const router = createBrowserRouter([
 
 const App = (): JSX.Element => {
     return (
-        <QueryClientProvider client={queryClient}>
-            <AuthProvider>
-                <RouterProvider router={router}/>
-            </AuthProvider>
-        </QueryClientProvider>
+        <RouterProvider router={router}/>
     );
 }
 

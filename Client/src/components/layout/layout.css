@@ -13,7 +13,7 @@
     grid-area: sidebar;
 }
 
-.page .dashboardPage {
+.page .dashboardPage .usersPage{
     grid-area: page;
 }
 

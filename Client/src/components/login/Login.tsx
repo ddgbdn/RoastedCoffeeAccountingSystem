@@ -2,14 +2,11 @@ import axios from 'axios';
 import React, {useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import axiosRequest from '../../api/axios';
-import useAuth from '../../hooks/useAuth'
 import './login.css'
 
 const LoginURL = '/authentication/login';
 
 const Login = () => {
-    const { setAuthData } = useAuth();
-
     const navigate = useNavigate();
 
     const [username, setUsername] = useState<string>('');
@@ -22,7 +19,6 @@ const Login = () => {
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-
         try {
             const response = await axiosRequest.post(
                 LoginURL,
@@ -32,13 +28,14 @@ const Login = () => {
                     withCredentials: true
                 },
             )
-            setAuthData({
-                accessToken: response?.data?.accessToken,
-                refreshToken: response?.data?.refreshToken
-            })    
+            localStorage.setItem("accessToken", response.data.accessToken)
+            localStorage.setItem("refreshToken", response.data.refreshToken)
+
             setUsername('');
             setPassword('');
-            navigate('/dashboard', {replace: true});
+            setTimeout(() => {
+                navigate('/dashboard');
+            }, 1);            
         } catch (error) {
             if (axios.isAxiosError(error)){
                 if (!error?.response) {
@@ -56,30 +53,30 @@ const Login = () => {
     }
 
     return (        
-        <section className='login'>
+        <div className='login'>
             <p className={errorMessage ? 'error' : 'offscreen'}>{errorMessage}</p>
-            <h1 style={{textAlign: 'center'}}>Sign In</h1>
-            <form onSubmit={handleSubmit}>
-                <label htmlFor='username'>Username:</label>
+            <h2 style={{textAlign: 'center', margin: 30}}>Sign In</h2>
+            <form onSubmit={handleSubmit} className='loginForm'>
                 <input 
                     type="text" 
                     id="username"
                     autoComplete='off'
+                    placeholder='Username'
                     onChange={(e) => setUsername(e.target.value)}
                     value={username}
                     required   
                 />
-                <label htmlFor='password'>Password:</label>
                 <input 
                     type="password" 
                     id="password"
+                    placeholder='Password'
                     onChange={(e) => setPassword(e.target.value)}
                     value={password}
                     required   
                 />
-                <button>Sign In</button>
+                <button className='loginButton'>Sign In</button>
             </form>
-        </section>        
+        </div>        
     )
 }
 

@@ -5,8 +5,12 @@ table {
     width:100%;
 }
 
-.roastingTable, .greenCoffeeTable {
+.roastingTable, .greenCoffeeTable, .userTable {
     overflow-x: auto;
+}
+
+.userTable {
+    height: 540;
 }
 
 tr {

@@ -1,6 +1,38 @@
 .login {
+    position: absolute;
+    top: 25%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     color: aliceblue;
+    border-radius: 10px;
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
+    background-color: #232323;
+    width: 250px
+}
+
+.loginForm input {
+    color: aliceblue;
+    background-color: #232323;
+    height: 30px;
+    border: 0;
+    border-bottom: 0.5px solid aliceblue;
+}
+
+.loginButton {
+    height: 30px;
+    width: 40%;
+    margin: 30px 0px;
+    overflow: hidden;
+    color: white;
+    background-color: unset;
+    border: 0.5px solid aliceblue;
+    transition: all .3s ease;
+}
+
+.loginButton:hover {
+    background-color: aliceblue;
+    color: black;
 }

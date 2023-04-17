@@ -82,6 +82,24 @@
     padding: 1rem 1.1rem;
 }
 
+.sideBarMenuItem.disabled {
+    opacity: 50%;
+}
+
+.logoutButton {
+    position: absolute;
+    bottom: 2%;
+    left: 5%;
+    background-color: unset;
+    border: unset;
+    color: aliceblue;
+    text-decoration: underline;
+}
+
+.logoutButton.collapsed {
+    display: none;
+}
+
 .collapseButton {    
     position: absolute;
     bottom: 2%;

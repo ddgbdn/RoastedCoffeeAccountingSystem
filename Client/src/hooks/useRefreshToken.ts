@@ -1,18 +1,19 @@
 import axios from '../api/axios';
-import useAuth from './useAuth'
 
 const useRefreshToken = () => {
-  const auth = useAuth();
 
-  const refresh = async () => {
+  const refresh = async (): Promise<string> => {
     const response = await axios.post(
      '/token/refresh', 
-    auth.authData,
+    {
+      accessToken: localStorage.getItem("accessToken"),
+      refreshToken: localStorage.getItem("refreshToken")
+    },
     {
       withCredentials: true
     });
-    console.log(response.data.accessToken)
-    auth.setAuthData(response.data)
+    localStorage.setItem("accessToken", response.data.accessToken)
+    localStorage.setItem("refreshToken", response.data.refreshToken)
     return response.data.accessToken;
   }
 

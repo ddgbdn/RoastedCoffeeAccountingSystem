@@ -4,16 +4,20 @@ import RoastingForm, { defaultFormRoasting } from '../components/forms/roastingf
 import RoastingTable, { ITableRoasting } from '../components/tables/roastingtable/RoastingTable'
 import useAxiosPrivate from '../hooks/useAxiosPrivate'
 import { defaultPagination } from '../components/tables/TablePaginationFooter'
+import { defaultRoastingStats } from '../components/dashboards/maindashboard/MainRoastingsDashboard'
 
 const Roastings = () => {
   const axiosPrivate = useAxiosPrivate();
 
-  const pageSize = 10;
-  const [roastings, setRoastings] = useState<ITableRoasting[]>([]);
-  const [roastingToEdit, setRoastingToEdit] = useState(defaultFormRoasting)
+  const pageSize = 10;  
   const [pageNumber, setPageNumber] = useState(1);
   const [paginationInfo, setPaginationInfo] = useState(defaultPagination);  
   const [date, setDate] = useState(new Date());
+
+  const [roastings, setRoastings] = useState<ITableRoasting[]>([]);
+  const [roastingToEdit, setRoastingToEdit] = useState(defaultFormRoasting);
+  const [roastingStats, setRoastingStats] = useState(defaultRoastingStats);
+
 
   const getRoastings = useCallback(async () => {
     try {
@@ -21,16 +25,30 @@ const Roastings = () => {
         params: {
           pageNumber: pageNumber,
           pageSize: pageSize,
-          startDate: new Date(date.getFullYear(), date.getMonth(), 1),
-          endDate: new Date(date.getFullYear(), date.getMonth() + 1, 0)
+          startDate: new Date(date.getFullYear(), date.getMonth(), 1).toLocaleDateString(),
+          endDate: new Date(date.getFullYear(), date.getMonth() + 1, 0).toLocaleDateString()
         }
       })
+
       setRoastings(response.data)
       setPaginationInfo(JSON.parse(response.headers['x-pagination']));
     } catch (error) {
       console.error(error)
     } 
   }, [axiosPrivate, pageNumber, pageSize, date])
+
+  const getRoastingStats = useCallback(async () => {
+    try {
+      const response = await axiosPrivate.get('/statistics/roastings', {
+        params: {
+          date: date.toLocaleDateString()
+        }
+      })
+      setRoastingStats(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  }, [axiosPrivate, date])
 
   const handleEdit = (roasting: ITableRoasting) => {
     setRoastingToEdit({
@@ -41,12 +59,16 @@ const Roastings = () => {
   }
 
   useEffect(() => {
+    getRoastingStats();
+  }, [getRoastingStats])
+
+  useEffect(() => {
     getRoastings();
   }, [pageNumber, getRoastings])
 
   return (
     <div className='page'>
-        <RoastingDashboard date={date} setDate={setDate}/>
+        <RoastingDashboard date={date} setDate={setDate} RoastingStats={roastingStats}/>
         <RoastingTable 
           roastings={roastings} 
           paginationInfo={paginationInfo} 
@@ -55,7 +77,10 @@ const Roastings = () => {
           handleMutationSync={getRoastings}
         />
         <RoastingForm 
-          handleMutationSync={getRoastings}
+          handleMutationSync={async () => {
+            getRoastings();
+            getRoastingStats();
+          }}
           roastingToEdit={roastingToEdit}
         />
     </div>
