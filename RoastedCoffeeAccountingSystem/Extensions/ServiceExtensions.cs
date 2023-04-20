@@ -23,6 +23,7 @@ namespace RoastedCoffeeAccountingSystem.Extensions
                     .WithOrigins("http://localhost:3000/")
                     .AllowAnyMethod()
                     .AllowAnyHeader()
+                    .WithExposedHeaders("X-Pagination")
                     .AllowCredentials());
             });
         public static void ConfigureIISIntegration(this IServiceCollection services) => 

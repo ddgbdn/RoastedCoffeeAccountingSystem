@@ -14,5 +14,7 @@ namespace Shared.DataTransferObjects
 
         [Range(0.01, 100, ErrorMessage = "Amount should be greater than 0 and not more than 100 kgs and is required")]
         public double Amount { get; init; }
+
+        public DateTime Date { get; init; }
     }
 }

@@ -41,7 +41,7 @@ namespace Repository
         {
             var allRoastings = FindAll(false);
 
-            var avgPerDay = await allRoastings.AverageAsync(r => r.Amount);
+            var avgPerDay = await allRoastings.GroupBy(r => r.Date).Select(g => g.Sum(r => r.Amount)).AverageAsync();
             var total = await allRoastings.SumAsync(r => r.Amount);
             var totalAvg = (await allRoastings
                 .GroupBy(r => new {r.Date.Month, r.Date.Year})
@@ -63,7 +63,7 @@ namespace Repository
 
             if (monthRoastings.Count() > 0)
             {
-                avgPerDayThisMonth = await monthRoastings.AverageAsync(r => r.Amount);
+                avgPerDayThisMonth = await monthRoastings.GroupBy(r => r.Date).Select(g => g.Sum(r => r.Amount)).AverageAsync();
                 workDaysThisMonth = await monthRoastings.GroupBy(r => r.Date).CountAsync();
             }
 
