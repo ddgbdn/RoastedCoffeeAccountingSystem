@@ -1,8 +1,12 @@
 import React, { useEffect, useState } from 'react'
+
+import 'react-datepicker/dist/react-datepicker.css'
 import '../form.css'
 import './roastingform.css'
 import useAxiosPrivate from '../../../hooks/useAxiosPrivate'
 import axios from 'axios'
+import DatePicker from "react-datepicker"
+
 
 const RoastingForm = ({handleMutationSync, roastingToEdit}: IRoastingFormProps) => {
   const axiosPrivate = useAxiosPrivate();
@@ -128,7 +132,15 @@ const RoastingForm = ({handleMutationSync, roastingToEdit}: IRoastingFormProps) 
                 name='weight'
                 required
                 value={roasting.amount}
-                onChange={(e) => setRoasting((prev) => {return {...prev, amount: e.target.value}})}/>
+                onChange={(e) => setRoasting((prev) => {return {...prev, amount: e.target.value}})}
+              />
+              <DatePicker
+                selected={roasting.date}
+                onChange={(date) => setRoasting(prev => {
+                  date?.setHours(date.getHours() + 6)
+                  return {...prev, date: date ?? new Date()}
+                })}
+              />
               <button type='submit' className='formButton'>Submit</button>   
               <button className='clearButton'>Clear form</button>       
           </form>
@@ -150,13 +162,15 @@ interface ICoffeeOption {
 export interface IFormRoasting {
   id: number,
   coffeeId: string,
-  amount: string
+  amount: string,
+  date: Date
 }
 
 export const defaultFormRoasting: IFormRoasting = {
   id: -1,
   coffeeId: '',
-  amount: ''
+  amount: '',
+  date: new Date()
 }
 
 interface IRoastingFormProps {

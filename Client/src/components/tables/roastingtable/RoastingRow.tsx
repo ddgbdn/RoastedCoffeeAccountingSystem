@@ -7,7 +7,7 @@ const RoastingRow = ({roasting, handleEdit, handleMutationSync}: IRoastingRowPro
     const handleDelete = async () => {
         try {
             await axiosPrivate.delete(
-                `/roasting/${roasting.id}`
+                `/roastings/${roasting.id}`
             )
             await handleMutationSync();
         } catch (error) {

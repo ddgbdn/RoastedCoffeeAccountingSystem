@@ -16,13 +16,17 @@ form {
     margin: 60px 0px 50px 0px;
 }
 
-.formContainer input {
+.formContainer input{
     width: 70%;
     height: 35px;
     color: aliceblue;
     background-color: #232323;
     border: 0;
     border-bottom: 0.5px solid aliceblue;
+}
+
+.react-datepicker-wrapper {
+    text-align: center;
 }
 
 .formContainer select {
@@ -36,6 +40,36 @@ form {
 
 input:focus {
     outline: none;
+}
+
+.react-datepicker {
+    background-color: #333333 !important;
+    color: aliceblue !important;
+    border: 1px solid #4e4e4e !important;
+}
+
+.react-datepicker__header {
+    background-color: #232323 !important;
+    border-bottom: 1px solid #4e4e4e !important;  
+}
+
+.react-datepicker__today-button {
+    background: #232323 !important;
+}
+
+.react-datepicker__day-name, .react-datepicker__day, .react-datepicker__time-name {
+    color: aliceblue !important;
+}
+
+.react-datepicker__day--selected {
+    background-color: #272727 !important;
+}
+
+.react-datepicker__current-month, .react-datepicker-time__header, .react-datepicker-year-header {
+    color: aliceblue !important;
+}
+.react-datepicker__day:hover {
+    background-color: #232323 !important;
 }
 
 .formButton {

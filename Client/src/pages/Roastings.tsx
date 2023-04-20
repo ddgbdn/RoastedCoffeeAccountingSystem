@@ -25,8 +25,8 @@ const Roastings = () => {
         params: {
           pageNumber: pageNumber,
           pageSize: pageSize,
-          startDate: new Date(date.getFullYear(), date.getMonth(), 1).toLocaleDateString(),
-          endDate: new Date(date.getFullYear(), date.getMonth() + 1, 0).toLocaleDateString()
+          startDate: new Date(date.getFullYear(), date.getMonth(), 1).toDateString(),
+          endDate: new Date(date.getFullYear(), date.getMonth() + 1, 0).toDateString()
         }
       })
 
@@ -41,7 +41,7 @@ const Roastings = () => {
     try {
       const response = await axiosPrivate.get('/statistics/roastings', {
         params: {
-          date: date.toLocaleDateString()
+          date: date.toDateString()
         }
       })
       setRoastingStats(response.data);
@@ -54,7 +54,8 @@ const Roastings = () => {
     setRoastingToEdit({
       id: roasting.id,
       coffeeId: roasting.coffeeId.toString(),
-      amount: roasting.amount.toString()
+      amount: roasting.amount.toString(),
+      date: new Date(roasting.date)
     })
   }
 

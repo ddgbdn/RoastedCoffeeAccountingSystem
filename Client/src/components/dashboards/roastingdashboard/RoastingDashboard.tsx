@@ -8,7 +8,7 @@ const RoastingsDashboard = ({RoastingStats, date, setDate}: ILocalRoastingsDashb
   return (
     <div className='localDashboard'>
       <span className='dashboardSpan'>
-        {date.toLocaleString('default', {month: 'long'})} {date.getFullYear()}
+        {date.toLocaleString('en-GB', {month: 'long'})} {date.getFullYear()}
       </span>
       <div className='stats'>
         <div className='stat'>

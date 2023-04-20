@@ -13,7 +13,7 @@ const MainRoastingsDashboard = () => {
       try {
         const response = await axiosPrivate.get('/statistics/roastings', {
           params: {
-            date: date.toLocaleDateString()
+            date: date.toDateString()
           }
         })
         setRoastingStats(response.data)
@@ -60,7 +60,7 @@ const MainRoastingsDashboard = () => {
             >
               <i className='bi bi-caret-left-fill'/>
             </button>
-            <h3>{date.toLocaleString('default', {month: 'long'})}</h3>
+            <h3>{date.toLocaleString('en-GB', {month: 'long'})}</h3>
             <button 
               className='roastDashButton'
               onClick={() => {
@@ -122,17 +122,20 @@ const MainRoastingsDashboard = () => {
               data={roastingStats.sixPreviousMonthsTotal.map((m, i) => {
                 return {
                   x: new Date(date.getFullYear(), date.getMonth() - (5 - i))
-                    .toLocaleString('default', {month: 'short'}),
+                    .toLocaleString('en-GB', {month: 'short'}),
                   y: m
                 }
               })}
+              labels={({datum}) => `${datum.y.toFixed(2)}`}
               style={{
-                data: {fill: '#c9c9c9'}
+                data: {fill: '#c9c9c9'},
+                labels: {fill: '#c9c9c9'}
               }}
               animate={{
                 duration: 2000,
                 onLoad: { duration: 1000 }
               }}
+              alignment='start'
             />
           </VictoryChart>
         </div>

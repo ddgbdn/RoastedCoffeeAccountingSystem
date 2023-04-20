@@ -1,5 +1,6 @@
 import axios from 'axios';
-const baseURL ='http://www.brewplaceroastery.bp/api';
+const baseURL ='https://brewplaceroastery.azurewebsites.net/api';
+//const baseURL ='http://www.brewplaceroastery.bp/api';
 
 export default axios.create({
     baseURL: baseURL
